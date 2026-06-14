@@ -9,21 +9,21 @@
 
   .inner {
     display: flex;
-    gap: 16px;
+    gap: var(--base-size-16);
     align-items: center;
     justify-content: space-between;
 
-    padding: 16px 24px;
+    padding: var(--base-size-16) var(--base-size-24);
 
     .left {
       display: flex;
       flex-shrink: 0;
-      gap: 24px;
+      gap: var(--base-size-24);
       align-items: center;
 
       .logo {
         display: flex;
-        gap: 8px;
+        gap: var(--base-size-8);
         align-items: center;
 
         color: var(--brand-color-text-default);
@@ -44,21 +44,22 @@
     }
 
     .themeToggle {
+      cursor: pointer;
+
       display: flex;
       flex-shrink: 0;
       align-items: center;
       justify-content: center;
 
-      width: 32px;
-      height: 32px;
+      width: var(--base-size-32);
+      height: var(--base-size-32);
       padding: 0;
+      border: none;
+      border-radius: var(--base-size-6);
 
       color: var(--brand-color-text-muted);
 
-      cursor: pointer;
       background-color: transparent;
-      border: none;
-      border-radius: 6px;
 
       &:hover {
         color: var(--brand-color-text-default);
@@ -66,7 +67,7 @@
       }
 
       svg {
-        fill: currentColor;
+        fill: currentcolor;
       }
     }
   }
