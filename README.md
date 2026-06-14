@@ -1,1 +1,87 @@
-# skillpedia.vercel.app
+# Skillpedia
+
+- [소개](#소개)
+- [기술 스택](#기술-스택)
+- [프로젝트 구조](#프로젝트-구조)
+- [설치 및 실행](#설치-및-실행)
+  - [사전 설치](#사전-설치)
+  - [패키지 설치](#패키지-설치)
+  - [환경 변수 설정](#환경-변수-설정)
+  - [프로젝트 실행](#프로젝트-실행)
+- [빌드 및 배포](#빌드-및-배포)
+  - [빌드](#빌드)
+  - [배포](#배포)
+
+## 소개
+
+Skillpedia(스킬피디아)는 GitHub 저장소에 흩어진 SKILL.md, README.mdx 파일을 수집하여 구조화된 문서를 제공하는 것이 목적입니다. 개발자가 작성한 스킬 문서를 읽고 정확한 사용법을 파악할 수 있도록 합니다.
+
+> "AI 에이전트가 도구를 정확하게 사용하려면 엔지니어가 작성한 검증된 지침서가 필요합니다. Skillpedia는 그 지침서를 가장 효율적으로 전달하는 관문입니다."
+
+## 기술 스택
+
+| 구분           | 기술                         |
+| -------------- | ---------------------------- |
+| 언어           | TypeScript                   |
+| 프레임워크     | Next.js (App Router)         |
+| UI 라이브러리  | @primer/react-brand          |
+| 스타일         | Modules SCSS                 |
+| API 클라이언트 | Octokit (GitHub App)         |
+| MDX 처리       | next-mdx-remote, gray-matter |
+| 패키지 관리    | NPM                          |
+
+## 프로젝트 구조
+
+Skillpedia는 확장성과 유지보수성을 위해 FSD(Feature-Sliced Design) 아키텍처를 따르며, Next.js App Router와의 충돌을 방지하기 위해 views 레이어를 사용합니다.
+
+```text
+src/
+├── app/        # 앱 설정, 전역 스타일, 레이아웃
+├── views/      # 페이지 단위 컴포지션 (HomePage 등)
+├── widgets/    # 복합 UI 블록 (Header, Sidebar, Toc 등)
+├── features/   # 사용자 상호작용 기능 (repo-markdown, repo-tree 등)
+└── shared/     # 공통 UI 컴포넌트, API 클라이언트 (github)
+```
+
+## 설치 및 실행
+
+### 사전 설치
+
+```shell
+nvm install
+```
+
+### 패키지 설치
+
+```shell
+npm install
+```
+
+### 환경 변수 설정
+
+`.env.local.example` 파일을 복사하여 `.env.local` 파일을 생성하고 GitHub App 정보를 입력합니다.
+
+```properties
+GITHUB_APP_ID=
+GITHUB_PRIVATE_KEY=
+```
+
+### 프로젝트 실행
+
+```shell
+npm run dev
+```
+
+## 빌드 및 배포
+
+### 빌드
+
+```shell
+npm run build
+```
+
+### 배포
+
+GitHub 저장소의 `main` 브랜치에 변경 사항을 병합하면 Vercel을 통해 자동으로 배포를 진행합니다.
+
+- [Vercel Dashboard](https://vercel.com/dashboard)
