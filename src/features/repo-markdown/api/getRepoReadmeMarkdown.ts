@@ -15,10 +15,21 @@ const README_FILE_NAMES = ['README.mdx', 'README.md'] as const;
 
 const getCandidates = (path: string): string[] => {
   if (!path) {
-    return [...README_FILE_NAMES, ...README_FILE_NAMES.map((name) => `docs/${name}`)];
+    return [
+      ...README_FILE_NAMES,
+      ...README_FILE_NAMES.map((name) => {
+        return `docs/${name}`;
+      }),
+    ];
   }
 
-  return [`${path}.mdx`, `${path}.md`, ...README_FILE_NAMES.map((name) => `${path}/${name}`)];
+  return [
+    `${path}.mdx`,
+    `${path}.md`,
+    ...README_FILE_NAMES.map((name) => {
+      return `${path}/${name}`;
+    }),
+  ];
 };
 
 export const getRepoReadmeMarkdown = async ({

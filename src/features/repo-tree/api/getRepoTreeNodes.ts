@@ -60,9 +60,16 @@ export const getRepoTreeNodes = async ({
     // SKILL.md 파일이 있는 폴더 경로만 추출합니다.
     const paths = data.tree
       // node.type (blob: 파일, commit: 서브모듈 참조, tree: 폴더)
-      .filter((node) => node.type === 'blob' && /(^|\/)SKILL\.md$/.test(node.path ?? '')) // SKILL.md 앞이 문자열 시작 또는 /인 경우
-      .map((node) => node.path!.replace(/\/?SKILL\.md$/, ''))
-      .sort((a, b) => a.split('/').length - b.split('/').length || a.localeCompare(b));
+      .filter((node) => {
+        // SKILL.md 앞이 문자열 시작 또는 /인 경우
+        return node.type === 'blob' && /(^|\/)SKILL\.md$/.test(node.path ?? '');
+      })
+      .map((node) => {
+        return node.path!.replace(/\/?SKILL\.md$/, '');
+      })
+      .sort((a, b) => {
+        return a.split('/').length - b.split('/').length || a.localeCompare(b);
+      });
 
     const treeNodes: RepoTreeNode[] = [];
     const treeNodeMap = new Map<string, RepoTreeNode>();
