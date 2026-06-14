@@ -1,28 +1,29 @@
 {
   "version": "0.2.0",
+  "compounds": [
+    {
+      "configurations": ["server", "chrome"],
+      "name": "dev",
+      "stopAll": true
+    }
+  ],
   "configurations": [
     {
-      "name": "server",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
       "console": "integratedTerminal",
-      "skipFiles": ["<node_internals>/**"]
+      "name": "server",
+      "request": "launch",
+      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
     },
     {
       "name": "chrome",
-      "type": "chrome",
       "request": "launch",
+      "type": "chrome",
       "url": "http://localhost:3000",
-      "userDataDir": "${workspaceFolder}/.vscode/chrome"
-    }
-  ],
-  "compounds": [
-    {
-      "name": "dev",
-      "configurations": ["server", "chrome"],
-      "stopAll": true
+      "userDataDir": "${userHome}/.vscode/chrome-profile",
+      "webRoot": "${workspaceFolder}/.vscode/chrome",
     }
   ]
 }
