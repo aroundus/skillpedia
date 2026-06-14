@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "server",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "userDataDir": "${workspaceFolder}/.vscode/chrome"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "dev",
+      "configurations": ["server", "chrome"],
+      "stopAll": true
+    }
+  ]
+}

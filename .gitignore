@@ -1,0 +1,6 @@
+.env
+.env.local
+.next
+.vscode/chrome
+node_modules
+tsconfig.tsbuildinfo

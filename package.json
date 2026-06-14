@@ -1,0 +1,46 @@
+{
+  "name": "skillpedia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint src --fix",
+    "lint:style": "stylelint \"src/**/*.scss\" --fix"
+  },
+  "dependencies": {
+    "@fontsource-variable/mona-sans": "^5.2.8",
+    "@primer/brand-primitives": "^0.68.0",
+    "@primer/react-brand": "^0.68.0",
+    "classnames": "^2.5.1",
+    "gray-matter": "^4.0.3",
+    "marked": "^15.0.0",
+    "modern-normalize": "^3.0.1",
+    "next": "latest",
+    "octokit": "^4.0.2",
+    "react": "latest",
+    "react-dom": "latest",
+    "sass": "^1.83.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@stylistic/eslint-plugin-ts": "^4.4.1",
+    "@types/node": "^20.17.16",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "eslint": "^9.0.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import-x": "^4.16.1",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3",
+    "stylelint": "^17.11.1",
+    "stylelint-config-clean-order": "^8.0.1",
+    "stylelint-config-prettier-scss": "^1.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.0.0"
+  }
+}
