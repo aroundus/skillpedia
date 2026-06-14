@@ -1,0 +1,40 @@
+@use 'breakpoint' as *;
+
+.container {
+  scroll-margin-top: 140px;
+
+  position: sticky;
+  top: 65px;
+
+  overflow-y: auto;
+  flex-shrink: 0;
+  align-self: flex-start;
+
+  width: 280px;
+  max-height: calc(100vh - 65px);
+
+  .nav {
+    padding: var(--base-size-40) var(--base-size-16);
+
+    .title {
+      margin: 0 0 var(--base-size-12);
+      text-transform: uppercase;
+    }
+
+    // h3 하위 목차 항목을 들여씁니다.
+    .indent {
+      padding-inline-start: var(--base-size-16);
+    }
+
+    // Primer ActionList 활성 항목의 좌측 강조 바를 제거하고 배경·글자 강조만 남깁니다.
+    :global([data-active])::after {
+      display: none;
+    }
+  }
+}
+
+@media (width < $breakpoint-xlarge) {
+  .container {
+    display: none;
+  }
+}

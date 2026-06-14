@@ -1,0 +1,32 @@
+@use 'breakpoint' as *;
+
+.container {
+  flex-shrink: 0;
+  width: 300px;
+  padding-inline-start: var(--base-size-8);
+  border-right: 1px solid var(--brand-color-border-default);
+
+  .inner {
+    position: sticky;
+    top: 65px;
+    overflow-y: auto;
+    max-height: calc(100vh - 65px);
+
+    .title {
+      margin: 0 0 var(--base-size-12);
+      padding: var(--base-size-24) var(--base-size-16) 0;
+    }
+
+    [data-component="ActionList.Group"] {
+      > ul > [data-component="ActionList.Item"] {
+        margin-top: var(--base-size-24);
+      }
+    }
+  }
+}
+
+@media (width < $breakpoint-large) {
+  .container {
+    display: none;
+  }
+}
