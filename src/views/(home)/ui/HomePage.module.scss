@@ -1,0 +1,65 @@
+@use 'breakpoint' as *;
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 65px);
+
+  .main {
+    max-width: 560px;
+    padding: var(--base-size-80) var(--base-size-24);
+    text-align: center;
+
+    .badge {
+      display: inline-block;
+
+      margin: 0 0 var(--base-size-24);
+      padding: var(--base-size-4) var(--base-size-12);
+      border: 1px solid var(--brand-color-border-default);
+      border-radius: 9999px;
+
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--brand-color-text-muted);
+      text-transform: uppercase;
+    }
+
+    .title {
+      margin: 0 0 var(--base-size-20);
+
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--brand-color-text-default);
+
+      @media (width < $breakpoint-small) {
+        font-size: 36px;
+      }
+    }
+
+    .description {
+      margin: 0 0 var(--base-size-32);
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--brand-color-text-muted);
+    }
+
+    .hint {
+      margin: 0;
+      font-size: 14px;
+      color: var(--brand-color-text-muted);
+
+      code {
+        padding: var(--base-size-2) var(--base-size-6);
+        border: 1px solid var(--brand-color-border-default);
+        border-radius: var(--base-size-4);
+
+        font-family: var(--brand-fontStack-monospace);
+        font-size: 14px;
+
+        background-color: var(--brand-color-canvas-subtle);
+      }
+    }
+  }
+}
