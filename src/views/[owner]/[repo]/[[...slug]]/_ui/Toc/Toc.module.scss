@@ -30,6 +30,12 @@
     :global([data-active])::after {
       display: none;
     }
+
+    // ActionList 항목 패딩을 줄이고, 활성 배경이 붙지 않도록 세로 간격을 둡니다.
+    :global([class*="ActionListContent"]) {
+      margin-block: var(--base-size-2);
+      padding: var(--base-size-2) var(--base-size-8);
+    }
   }
 }
 

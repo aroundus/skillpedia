@@ -51,9 +51,10 @@ export const OwnerRepoSlugPage = async ({ owner, repo, slug }: OwnerRepoSlugPage
     tabs.push({ content: skillMarkdown.content, label: 'SKILL' });
   }
 
+  // README의 표시 제목은 그대로 쓰고, 슬러그형 SKILL name·폴더명은 정규화합니다.
   const title = normalizeTitle(
-    skillMarkdown?.frontmatter.name ?? readmeMarkdown?.frontmatter.title,
-    folderName,
+    readmeMarkdown?.frontmatter.title,
+    skillMarkdown?.frontmatter.name ?? folderName,
   );
   const description =
     readmeMarkdown?.frontmatter.description ?? skillMarkdown?.frontmatter.description;

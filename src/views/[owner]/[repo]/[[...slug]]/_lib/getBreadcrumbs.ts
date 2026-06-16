@@ -1,3 +1,5 @@
+import { normalizeTitle } from './normalizeTitle';
+
 export interface Breadcrumb {
   href: string;
   label: string;
@@ -22,7 +24,7 @@ export const getBreadcrumbs = ({ owner, repo, slug }: GetBreadcrumbsParams): Bre
 
     breadcrumbs.push({
       href: `/${owner}/${repo}/${path}`,
-      label: segment.replace(/_/g, ' '),
+      label: normalizeTitle(undefined, segment),
     });
   }
 

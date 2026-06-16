@@ -55,7 +55,7 @@ export const Toc = ({ headings }: TocProps) => {
   return (
     <aside className={styles.container}>
       <nav aria-label="On This Page" className={styles.nav}>
-        <Text as="p" className={styles.title} variant="muted">
+        <Text as="p" className={styles.title} variant="default" weight="semibold">
           On This Page
         </Text>
 
@@ -68,9 +68,7 @@ export const Toc = ({ headings }: TocProps) => {
                 href={`#${heading.id}`}
                 key={heading.id}
               >
-                <Text size="100" variant="muted">
-                  {heading.value}
-                </Text>
+                <Text size="100">{heading.value}</Text>
               </ActionList.LinkItem>
             );
           })}
