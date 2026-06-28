@@ -1,3 +1,10 @@
+import { Layout } from '@/widgets/layout/ui';
+
 export default function RootGroupLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Layout.Header />
+      {children}
+    </>
+  );
 }
