@@ -1,16 +1,16 @@
 # Skillpedia
 
-- [소개](#소개)
-- [기술 스택](#기술-스택)
-- [프로젝트 구조](#프로젝트-구조)
-- [설치 및 실행](#설치-및-실행)
-  - [사전 설치](#사전-설치)
-  - [패키지 설치](#패키지-설치)
-  - [환경 변수 설정](#환경-변수-설정)
-  - [프로젝트 실행](#프로젝트-실행)
-- [빌드 및 배포](#빌드-및-배포)
-  - [빌드](#빌드)
-  - [배포](#배포)
+1. [소개](#소개)
+2. [기술 스택](#기술-스택)
+3. [프로젝트 구조](#프로젝트-구조)
+4. [설치 및 실행](#설치-및-실행)
+   1. [사전 설치](#사전-설치)
+   2. [패키지 설치](#패키지-설치)
+   3. [환경 변수 설정](#환경-변수-설정)
+   4. [프로젝트 실행](#프로젝트-실행)
+5. [빌드 및 배포](#빌드-및-배포)
+   1. [빌드](#빌드)
+   2. [배포](#배포)
 
 ## 소개
 
@@ -20,27 +20,32 @@ Skillpedia(스킬피디아)는 GitHub 저장소에 흩어진 SKILL.md, README.md
 
 ## 기술 스택
 
-| 구분           | 기술                         |
-| -------------- | ---------------------------- |
-| 언어           | TypeScript                   |
-| 프레임워크     | Next.js (App Router)         |
-| UI 라이브러리  | @primer/react-brand          |
-| 스타일         | Modules SCSS                 |
-| API 클라이언트 | Octokit (GitHub App)         |
-| MDX 처리       | next-mdx-remote, gray-matter |
-| 패키지 관리    | NPM                          |
+| 구분            | 기술                                                 |
+| --------------- | ---------------------------------------------------- |
+| 언어            | TypeScript                                           |
+| 프레임워크      | Next.js (App Router)                                 |
+| UI 라이브러리   | @primer/react-brand, @primer/react                   |
+| 스타일          | CSS Modules (SCSS)                                   |
+| API 클라이언트  | Octokit (GitHub App)                                 |
+| 마크다운 렌더링 | react-markdown (remark-gfm, rehype-raw, rehype-slug) |
+| 프런트매터·목차 | gray-matter, marked, github-slugger                  |
+| 코드 하이라이트 | react-syntax-highlighter                             |
+| 패키지 관리     | NPM                                                  |
 
 ## 프로젝트 구조
 
 Skillpedia는 확장성과 유지보수성을 위해 FSD(Feature-Sliced Design) 아키텍처를 따르며, Next.js App Router와의 충돌을 방지하기 위해 views 레이어를 사용합니다.
 
+각 페이지에서만 쓰는 UI·로직은 해당 view 슬라이스 내부의 `_ui`, `_lib` 폴더에 둡니다.
+
 ```text
 src/
-├── app/        # 앱 설정, 전역 스타일, 레이아웃
-├── views/      # 페이지 단위 컴포지션 (HomePage 등)
-├── widgets/    # 복합 UI 블록 (Header, Sidebar, Toc 등)
-├── features/   # 사용자 상호작용 기능 (repo-markdown, repo-tree 등)
-└── shared/     # 공통 UI 컴포넌트, API 클라이언트 (github)
+├── app/        # 앱 설정, 프로바이더, 전역 스타일, 레이아웃, 라우트
+├── views/      # 페이지 단위 컴포지션과 페이지 전용 UI·로직
+│               #   (HomePage, OwnerRepoSlugPage + _ui: Article·Prose·CodeBlock·Sidebar·Toc, _lib: parseMarkdown 등)
+├── widgets/    # 전역 레이아웃 블록 (Layout, Header, Content)
+├── features/   # 사용자 상호작용 기능 (repo-markdown, repo-tree)
+└── shared/     # 공통 API 클라이언트·스타일 (github, breakpoint)
 ```
 
 ## 설치 및 실행
