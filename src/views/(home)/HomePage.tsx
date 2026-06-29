@@ -4,13 +4,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { useState } from 'react';
-import type { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
+import type { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
 
 import {
   BookIcon,
   BrowserIcon,
   CopilotIcon,
   DatabaseIcon,
+  LockIcon,
+  OrganizationIcon,
   PeopleIcon,
   SearchIcon,
   ServerIcon,
@@ -26,6 +28,7 @@ import {
   Hero,
   Pillar,
   Section,
+  SectionIntro,
   TextInput,
   UnorderedList,
 } from '@primer/react-brand';
@@ -40,7 +43,7 @@ interface Category {
 
 interface Feature {
   description: string;
-  icon: ReactNode;
+  icon: Icon;
   title: string;
 }
 
@@ -98,60 +101,17 @@ const FEATURES: Feature[] = [
   {
     description:
       'GitHub App을 설치해 Private 저장소를 안전하게 연결하고, 사내 문서만 선택적으로 수집합니다.',
-    icon: (
-      <svg
-        className={styles.featureIcon}
-        fill="none"
-        height="30"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-        viewBox="0 0 24 24"
-        width="30"
-      >
-        <rect height="11" rx="2" width="18" x="3" y="11" />
-        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-      </svg>
-    ),
+    icon: LockIcon,
     title: '비공개 저장소 연결',
   },
   {
     description: 'Vercel Private·Docker로 사내망에 직접 배포해 외부 노출 없이 운영할 수 있습니다.',
-    icon: (
-      <svg
-        className={styles.featureIcon}
-        fill="none"
-        height="30"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-        viewBox="0 0 24 24"
-        width="30"
-      >
-        <rect height="8" rx="2" width="20" x="2" y="2" />
-        <rect height="8" rx="2" width="20" x="2" y="14" />
-        <path d="M6 6h.01M6 18h.01" />
-      </svg>
-    ),
+    icon: ServerIcon,
     title: '사내 인프라에 셀프 호스팅',
   },
   {
     description: 'SSO·접근 제어를 연동해 인증된 팀원에게만 문서 열람 권한을 부여합니다.',
-    icon: (
-      <svg
-        className={styles.featureIcon}
-        fill="none"
-        height="30"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-        viewBox="0 0 24 24"
-        width="30"
-      >
-        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-        <path d="m9 12 2 2 4-4" />
-      </svg>
-    ),
+    icon: OrganizationIcon,
     title: '조직 멤버만 접근',
   },
 ];
@@ -288,30 +248,28 @@ export const HomePage = () => {
         </Box>
       </Section>
 
-      <section className={styles.internal}>
-        <div className={styles.inner}>
-          <div className={styles.intro}>
-            <span className={styles.introLabel}>비공개 · 내부용</span>
-            <h2 className={styles.introHeading}>팀 내부에서만 안전하게 사용하기</h2>
-            <p className={styles.introDescription}>
-              공개 배포 없이 사내 저장소의 스킬 문서만 수집하고, 인증된 팀원에게만 제공할 수
-              있습니다. 다음 세 가지 방법으로 안전하게 운영하세요.
-            </p>
-          </div>
-
-          <div className={styles.features}>
-            {FEATURES.map((feature) => {
-              return (
-                <div className={styles.feature} key={feature.title}>
-                  {feature.icon}
-                  <h3 className={styles.featureTitle}>{feature.title}</h3>
-                  <p className={styles.featureText}>{feature.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <Section as="section" backgroundColor="subtle" data-color-mode="dark">
+        <Box
+          paddingBlockEnd={80}
+          paddingBlockStart={80}
+          paddingInlineEnd={40}
+          paddingInlineStart={40}
+        >
+          <SectionIntro>
+            <SectionIntro.Label>Private</SectionIntro.Label>
+            <SectionIntro.Heading size="2" weight="extrabold">
+              사내 저장소 스킬을
+              <br />
+              팀 안에서만 안전하게
+            </SectionIntro.Heading>
+            <SectionIntro.Description>
+              사내 인프라에 직접 설치해서 운영해 보세요. 외부에 공개하지 않고 사내 저장소의 스킬
+              문서를 안전하게 구조화할 수 있습니다.
+            </SectionIntro.Description>
+            <SectionIntro.Link href="#">가이드 보러 가기</SectionIntro.Link>
+          </SectionIntro>
+        </Box>
+      </Section>
 
       <footer className={styles.footer}>
         <div className={styles.inner}>
