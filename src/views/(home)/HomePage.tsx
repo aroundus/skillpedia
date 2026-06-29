@@ -26,9 +26,11 @@ import {
   Grid,
   Heading,
   Hero,
+  MinimalFooter,
   Pillar,
   Section,
   SectionIntro,
+  Text,
   TextInput,
   UnorderedList,
 } from '@primer/react-brand';
@@ -259,8 +261,7 @@ export const HomePage = () => {
             <SectionIntro.Label>Private</SectionIntro.Label>
             <SectionIntro.Heading size="2" weight="extrabold">
               사내 저장소 스킬을
-              <br />
-              팀 안에서만 안전하게
+              <br />팀 안에서 안전하게
             </SectionIntro.Heading>
             <SectionIntro.Description>
               사내 인프라에 직접 설치해서 운영해 보세요. 외부에 공개하지 않고 사내 저장소의 스킬
@@ -271,22 +272,26 @@ export const HomePage = () => {
         </Box>
       </Section>
 
-      <footer className={styles.footer}>
-        <div className={styles.inner}>
-          <span>Skillpedia · SKILL.md & README 문서 수집 관문</span>
-          <span className={styles.nav}>
-            <Link className={styles.navLink} href="/">
-              GitHub
-            </Link>
-            <Link className={styles.navLink} href="/">
-              소개
-            </Link>
-            <Link className={styles.navLink} href="/">
-              작성 가이드
-            </Link>
-          </span>
-        </div>
-      </footer>
+      <MinimalFooter
+        copyrightStatement={`© ${new Date().getFullYear()} Skillpedia · 오픈소스 스킬 문서 사전`}
+        logoHref="https://github.com/aroundus/skillpedia"
+        socialLinks={false}
+      >
+        <MinimalFooter.Footnotes>
+          <Text>
+            <strong>
+              Skillpedia(스킬피디아)는 GitHub의 공식 페이지가 아니며, 개인이 운영하는 비공식
+              프로젝트입니다.
+            </strong>{' '}
+            GitHub 저장소에 흩어진 SKILL.md 파일을 수집하여 구조화된 문서를 제공하는 것이
+            목적입니다. 개발자가 작성한 스킬 문서를 읽고 정확한 사용법을 파악할 수 있도록 합니다. AI
+            에이전트가 도구를 정확하게 사용하려면 엔지니어가 작성한 검증된 지침서가 필요합니다.
+            Skillpedia는 그 지침서를 가장 효율적으로 전달하는 통로가 됩니다.
+          </Text>
+        </MinimalFooter.Footnotes>
+        <MinimalFooter.Link href="/">소개</MinimalFooter.Link>
+        <MinimalFooter.Link href="/">작성 가이드</MinimalFooter.Link>
+      </MinimalFooter>
     </div>
   );
 };

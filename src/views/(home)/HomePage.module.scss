@@ -25,37 +25,4 @@
     }
   }
 
-  .footer {
-    border-top: 1px solid var(--brand-color-border-default);
-    background-color: var(--brand-color-canvas-subtle);
-
-    .inner {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--base-size-12);
-      align-items: center;
-      justify-content: space-between;
-
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: var(--base-size-24);
-
-      font-size: 13px;
-      color: var(--brand-color-text-muted);
-
-      .nav {
-        display: flex;
-        gap: 18px;
-
-        .navLink {
-          color: var(--brand-color-text-muted);
-          text-decoration: none;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-  }
 }
