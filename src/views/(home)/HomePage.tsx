@@ -11,6 +11,8 @@ import type {
   ReactNode,
 } from 'react';
 
+import { Section } from '@primer/react-brand';
+
 import styles from './HomePage.module.scss';
 
 interface Category {
@@ -198,7 +200,13 @@ export const HomePage = () => {
 
   return (
     <div className={styles.container}>
-      <section className={styles.hero}>
+      <Section
+        as="section"
+        backgroundColor="default"
+        className={styles.section}
+        paddingBlockEnd="spacious"
+        paddingBlockStart="spacious"
+      >
         <div className={styles.inner}>
           <div className={styles.content}>
             <span className={styles.label}>오픈소스 스킬 문서</span>
@@ -251,7 +259,7 @@ export const HomePage = () => {
             <span />
           </div>
         </div>
-      </section>
+      </Section>
 
       <main className={styles.categories}>
         <div className={styles.inner}>
