@@ -6,13 +6,34 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
 
-import { SearchIcon } from '@primer/octicons-react';
-import { Box, FormControl, Hero, Section, TextInput } from '@primer/react-brand';
+import {
+  BookIcon,
+  BrowserIcon,
+  CopilotIcon,
+  DatabaseIcon,
+  PeopleIcon,
+  SearchIcon,
+  ServerIcon,
+  ShieldCheckIcon,
+  ToolsIcon,
+} from '@primer/octicons-react';
+import type { Icon } from '@primer/octicons-react';
+import {
+  Box,
+  FormControl,
+  Grid,
+  Heading,
+  Hero,
+  Pillar,
+  Section,
+  TextInput,
+  UnorderedList,
+} from '@primer/react-brand';
 
 import styles from './HomePage.module.scss';
 
 interface Category {
-  icon: ReactNode;
+  icon: Icon;
   name: string;
   repos: string[];
 }
@@ -26,22 +47,7 @@ interface Feature {
 // 인기 저장소 둘러보기 카테고리 목록입니다.
 const CATEGORIES: Category[] = [
   {
-    icon: (
-      <svg
-        fill="none"
-        height="22"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.75"
-        viewBox="0 0 24 24"
-        width="22"
-      >
-        <path d="M12 8V4H8" />
-        <rect height="12" rx="2" width="16" x="4" y="8" />
-        <path d="M2 14h2M20 14h2M15 13v2M9 13v2" />
-      </svg>
-    ),
+    icon: CopilotIcon,
     name: 'AI 에이전트',
     repos: [
       'anthropics/skills',
@@ -51,140 +57,37 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    icon: (
-      <svg
-        fill="none"
-        height="22"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.75"
-        viewBox="0 0 24 24"
-        width="22"
-      >
-        <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" />
-        <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" />
-        <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
-      </svg>
-    ),
+    icon: BrowserIcon,
     name: '프론트엔드',
     repos: ['facebook/react', 'vercel/next.js', 'vuejs/core', 'sveltejs/svelte'],
   },
   {
-    icon: (
-      <svg
-        fill="none"
-        height="22"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.75"
-        viewBox="0 0 24 24"
-        width="22"
-      >
-        <rect height="8" rx="2" width="20" x="2" y="2" />
-        <rect height="8" rx="2" width="20" x="2" y="14" />
-        <path d="M6 6h.01M6 18h.01" />
-      </svg>
-    ),
+    icon: ServerIcon,
     name: '백엔드 & API',
     repos: ['fastapi/fastapi', 'nestjs/nest', 'expressjs/express'],
   },
   {
-    icon: (
-      <svg
-        fill="none"
-        height="22"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.75"
-        viewBox="0 0 24 24"
-        width="22"
-      >
-        <ellipse cx="12" cy="5" rx="9" ry="3" />
-        <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-        <path d="M3 12A9 3 0 0 0 21 12" />
-      </svg>
-    ),
+    icon: DatabaseIcon,
     name: '데이터 & 스토리지',
     repos: ['prisma/prisma', 'supabase/supabase', 'redis/redis'],
   },
   {
-    icon: (
-      <svg
-        fill="none"
-        height="22"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.75"
-        viewBox="0 0 24 24"
-        width="22"
-      >
-        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M15 12v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-      </svg>
-    ),
+    icon: ToolsIcon,
     name: 'DevOps & 클라우드',
     repos: ['kubernetes/kubernetes', 'hashicorp/terraform', 'docker/compose'],
   },
   {
-    icon: (
-      <svg
-        fill="none"
-        height="22"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.75"
-        viewBox="0 0 24 24"
-        width="22"
-      >
-        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-        <path d="m9 12 2 2 4-4" />
-      </svg>
-    ),
+    icon: ShieldCheckIcon,
     name: '보안',
     repos: ['aquasecurity/trivy', 'gitleaks/gitleaks', 'ossf/scorecard'],
   },
   {
-    icon: (
-      <svg
-        fill="none"
-        height="22"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.75"
-        viewBox="0 0 24 24"
-        width="22"
-      >
-        <path d="M12 7v14" />
-        <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
-      </svg>
-    ),
+    icon: BookIcon,
     name: '문서화',
     repos: ['mkdocs/mkdocs', 'shuding/nextra', 'facebook/docusaurus'],
   },
   {
-    icon: (
-      <svg
-        fill="none"
-        height="22"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.75"
-        viewBox="0 0 24 24"
-        width="22"
-      >
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
+    icon: PeopleIcon,
     name: '커뮤니티 & 협업',
     repos: ['github/docs', 'primer/react', 'storybookjs/storybook'],
   },
@@ -345,38 +248,45 @@ export const HomePage = () => {
         </Box>
       </Section>
 
-      <main className={styles.categories}>
-        <div className={styles.inner}>
-          <div className={styles.head}>
-            <h2 className={styles.heading}>인기 저장소 둘러보기</h2>
-            <Link className={styles.more} href="/">
-              전체 보기 →
-            </Link>
-          </div>
+      <Section
+        as="section"
+        className={styles.section}
+        paddingBlockEnd="spacious"
+        paddingBlockStart="spacious"
+      >
+        <Box paddingInlineEnd={40} paddingInlineStart={40}>
+          <Heading as="h2" size="5" weight="bold">
+            인기 저장소 둘러보기
+          </Heading>
 
-          <div className={styles.grid}>
+          <Grid style={{ marginTop: 80 }}>
             {CATEGORIES.map((category) => {
               return (
-                <div className={styles.category} key={category.name}>
-                  <div className={styles.name}>
-                    {category.icon}
-                    {category.name}
-                  </div>
-                  <div className={styles.links}>
+                <Grid.Column
+                  key={category.name}
+                  span={{ xsmall: 12, small: 6, medium: 4, large: 3 }}
+                >
+                  <Pillar>
+                    <Pillar.Icon icon={category.icon} size="medium" />
+                    <Pillar.Heading weight="bold">{category.name}</Pillar.Heading>
+                  </Pillar>
+                  <UnorderedList>
                     {category.repos.map((repoPath) => {
                       return (
-                        <Link className={styles.link} href={`/${repoPath}`} key={repoPath}>
-                          {repoPath}
-                        </Link>
+                        <UnorderedList.Item key={repoPath}>
+                          <Link className={styles.link} href={`/${repoPath}`}>
+                            {repoPath}
+                          </Link>
+                        </UnorderedList.Item>
                       );
                     })}
-                  </div>
-                </div>
+                  </UnorderedList>
+                </Grid.Column>
               );
             })}
-          </div>
-        </div>
-      </main>
+          </Grid>
+        </Box>
+      </Section>
 
       <section className={styles.internal}>
         <div className={styles.inner}>
