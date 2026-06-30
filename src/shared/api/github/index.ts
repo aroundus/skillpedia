@@ -1,1 +1,1 @@
-export { getInstallationOctokit, githubApp } from './github-app';
+export { getRepoOctokit, githubApp } from './github-app';

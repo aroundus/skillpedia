@@ -1,4 +1,4 @@
-import { getInstallationOctokit } from '@/shared/api/github';
+import { getRepoOctokit } from '@/shared/api/github';
 
 export interface GetRepoSkillMarkdownRequest {
   owner: string;
@@ -16,7 +16,7 @@ export const getRepoSkillMarkdown = async ({
   path,
   repo,
 }: GetRepoSkillMarkdownRequest): Promise<GetRepoSkillMarkdownResponse | null> => {
-  const octokit = await getInstallationOctokit(owner, repo);
+  const octokit = await getRepoOctokit(owner, repo);
   const filePath = path ? `${path}/SKILL.md` : 'SKILL.md';
 
   try {

@@ -1,4 +1,4 @@
-import { getInstallationOctokit } from '@/shared/api/github';
+import { getRepoOctokit } from '@/shared/api/github';
 
 export interface GetRepoReadmeMarkdownRequest {
   owner: string;
@@ -37,7 +37,7 @@ export const getRepoReadmeMarkdown = async ({
   path,
   repo,
 }: GetRepoReadmeMarkdownRequest): Promise<GetRepoReadmeMarkdownResponse> => {
-  const octokit = await getInstallationOctokit(owner, repo);
+  const octokit = await getRepoOctokit(owner, repo);
   const candidates = getCandidates(path);
 
   for (const candidate of candidates) {

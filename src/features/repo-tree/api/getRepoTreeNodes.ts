@@ -1,4 +1,4 @@
-import { getInstallationOctokit } from '@/shared/api/github';
+import { getRepoOctokit } from '@/shared/api/github';
 
 export interface RepoTreeNode {
   children?: RepoTreeNode[];
@@ -48,7 +48,7 @@ export const getRepoTreeNodes = async ({
   repo,
 }: GetRepoTreeNodesRequest): GetRepoTreeNodesResponse => {
   try {
-    const octokit = await getInstallationOctokit(owner, repo);
+    const octokit = await getRepoOctokit(owner, repo);
 
     const { data } = await octokit.rest.git.getTree({
       owner,
