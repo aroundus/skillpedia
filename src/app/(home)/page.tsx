@@ -1,5 +1,8 @@
 import { HomePage } from '@/views/(home)/HomePage';
+import { getRepoGroups } from '@/views/(home)/_lib';
 
 export default function Page() {
-  return <HomePage />;
+  const repoGroups = getRepoGroups();
+
+  return <HomePage repoGroups={repoGroups} />;
 }

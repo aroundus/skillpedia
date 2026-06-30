@@ -6,18 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
 
-import {
-  BookIcon,
-  BrowserIcon,
-  CopilotIcon,
-  DatabaseIcon,
-  PeopleIcon,
-  SearchIcon,
-  ServerIcon,
-  ShieldCheckIcon,
-  ToolsIcon,
-} from '@primer/octicons-react';
-import type { Icon } from '@primer/octicons-react';
+import { SearchIcon } from '@primer/octicons-react';
+import { ActionList } from '@primer/react';
 import {
   Box,
   FormControl,
@@ -25,78 +15,21 @@ import {
   Heading,
   Hero,
   MinimalFooter,
-  Pillar,
   Section,
   SectionIntro,
   Text,
   TextInput,
-  UnorderedList,
 } from '@primer/react-brand';
+
+import type { RepoGroup } from './_lib';
 
 import styles from './HomePage.module.scss';
 
-interface Category {
-  icon: Icon;
-  name: string;
-  repos: string[];
+interface HomePageProps {
+  repoGroups: RepoGroup[];
 }
 
-interface Feature {
-  description: string;
-  icon: Icon;
-  title: string;
-}
-
-// 인기 저장소 둘러보기 카테고리 목록입니다.
-const CATEGORIES: Category[] = [
-  {
-    icon: CopilotIcon,
-    name: 'AI 에이전트',
-    repos: [
-      'anthropics/skills',
-      'openai/openai-cookbook',
-      'langchain-ai/langchain',
-      'microsoft/autogen',
-    ],
-  },
-  {
-    icon: BrowserIcon,
-    name: '프론트엔드',
-    repos: ['facebook/react', 'vercel/next.js', 'vuejs/core', 'sveltejs/svelte'],
-  },
-  {
-    icon: ServerIcon,
-    name: '백엔드 & API',
-    repos: ['fastapi/fastapi', 'nestjs/nest', 'expressjs/express'],
-  },
-  {
-    icon: DatabaseIcon,
-    name: '데이터 & 스토리지',
-    repos: ['prisma/prisma', 'supabase/supabase', 'redis/redis'],
-  },
-  {
-    icon: ToolsIcon,
-    name: 'DevOps & 클라우드',
-    repos: ['kubernetes/kubernetes', 'hashicorp/terraform', 'docker/compose'],
-  },
-  {
-    icon: ShieldCheckIcon,
-    name: '보안',
-    repos: ['aquasecurity/trivy', 'gitleaks/gitleaks', 'ossf/scorecard'],
-  },
-  {
-    icon: BookIcon,
-    name: '문서화',
-    repos: ['mkdocs/mkdocs', 'shuding/nextra', 'facebook/docusaurus'],
-  },
-  {
-    icon: PeopleIcon,
-    name: '커뮤니티 & 협업',
-    repos: ['github/docs', 'primer/react', 'storybookjs/storybook'],
-  },
-];
-
-export const HomePage = () => {
+export const HomePage = ({ repoGroups }: HomePageProps) => {
   const router = useRouter();
   const [repo, setRepo] = useState('');
   const [status, setStatus] = useState<string | null>(null);
@@ -196,31 +129,25 @@ export const HomePage = () => {
       >
         <Box paddingInlineEnd={40} paddingInlineStart={40}>
           <Heading as="h2" size="5" weight="bold">
-            인기 저장소 둘러보기
+            저장소 둘러보기
           </Heading>
 
           <Grid style={{ marginTop: 80 }}>
-            {CATEGORIES.map((category) => {
+            {repoGroups.map((group) => {
               return (
-                <Grid.Column
-                  key={category.name}
-                  span={{ xsmall: 12, small: 6, medium: 4, large: 3 }}
-                >
-                  <Pillar>
-                    <Pillar.Icon icon={category.icon} size="medium" />
-                    <Pillar.Heading weight="bold">{category.name}</Pillar.Heading>
-                  </Pillar>
-                  <UnorderedList>
-                    {category.repos.map((repoPath) => {
+                <Grid.Column key={group.name} span={{ xsmall: 12, small: 6, medium: 4, large: 3 }}>
+                  <Heading as="h3" size="6" weight="semibold">
+                    {group.name}
+                  </Heading>
+                  <ActionList>
+                    {group.repos.map((repo) => {
                       return (
-                        <UnorderedList.Item key={repoPath}>
-                          <Link className={styles.link} href={`/${repoPath}`}>
-                            {repoPath}
-                          </Link>
-                        </UnorderedList.Item>
+                        <ActionList.LinkItem as={Link} href={`/${repo}`} key={repo}>
+                          <Text size="200">{repo}</Text>
+                        </ActionList.LinkItem>
                       );
                     })}
-                  </UnorderedList>
+                  </ActionList>
                 </Grid.Column>
               );
             })}
