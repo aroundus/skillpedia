@@ -11,8 +11,6 @@ import {
   BrowserIcon,
   CopilotIcon,
   DatabaseIcon,
-  LockIcon,
-  OrganizationIcon,
   PeopleIcon,
   SearchIcon,
   ServerIcon,
@@ -95,26 +93,6 @@ const CATEGORIES: Category[] = [
     icon: PeopleIcon,
     name: '커뮤니티 & 협업',
     repos: ['github/docs', 'primer/react', 'storybookjs/storybook'],
-  },
-];
-
-// 내부용 안전 운영 방법 목록입니다.
-const FEATURES: Feature[] = [
-  {
-    description:
-      'GitHub App을 설치해 Private 저장소를 안전하게 연결하고, 사내 문서만 선택적으로 수집합니다.',
-    icon: LockIcon,
-    title: '비공개 저장소 연결',
-  },
-  {
-    description: 'Vercel Private·Docker로 사내망에 직접 배포해 외부 노출 없이 운영할 수 있습니다.',
-    icon: ServerIcon,
-    title: '사내 인프라에 셀프 호스팅',
-  },
-  {
-    description: 'SSO·접근 제어를 연동해 인증된 팀원에게만 문서 열람 권한을 부여합니다.',
-    icon: OrganizationIcon,
-    title: '조직 멤버만 접근',
   },
 ];
 
