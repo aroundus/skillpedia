@@ -132,21 +132,21 @@ export const HomePage = ({ repoGroups }: HomePageProps) => {
             저장소 둘러보기
           </Heading>
 
-          <Grid style={{ marginTop: 80 }}>
+          <Grid style={{ marginTop: 40 }}>
             {repoGroups.map((group) => {
               return (
                 <Grid.Column key={group.name} span={{ xsmall: 12, small: 6, medium: 4, large: 3 }}>
-                  <Heading as="h3" size="6" weight="semibold">
-                    {group.name}
-                  </Heading>
                   <ActionList>
-                    {group.repos.map((repo) => {
-                      return (
-                        <ActionList.LinkItem as={Link} href={`/${repo}`} key={repo}>
-                          <Text size="200">{repo}</Text>
-                        </ActionList.LinkItem>
-                      );
-                    })}
+                    <ActionList.Group>
+                      <ActionList.GroupHeading as="h3">{group.name}</ActionList.GroupHeading>
+                      {group.repos.map((repo) => {
+                        return (
+                          <ActionList.LinkItem as={Link} href={`/${repo}`} key={repo}>
+                            <Text size="200">{repo}</Text>
+                          </ActionList.LinkItem>
+                        );
+                      })}
+                    </ActionList.Group>
                   </ActionList>
                 </Grid.Column>
               );

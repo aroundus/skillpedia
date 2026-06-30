@@ -12,5 +12,5 @@ export const getRepoGroups = (): RepoGroup[] => {
   const filePath = join(process.cwd(), 'repositories.yaml');
   const content = readFileSync(filePath, 'utf8');
 
-  return load(content) as RepoGroup[];
+  return (load(content) || []) as RepoGroup[];
 };
