@@ -27,11 +27,10 @@
     },
     "Header": {
       "language": {
-        "label": "Language"
+        "ariaLabel": "Language"
       },
       "theme": {
-        "toDark": "Switch to dark mode",
-        "toLight": "Switch to light mode"
+        "ariaLabel": "{colorMode, select, light {Switch to dark mode} other {Switch to light mode}}"
       }
     }
   },

@@ -27,11 +27,10 @@
     },
     "Header": {
       "language": {
-        "label": "언어"
+        "ariaLabel": "언어"
       },
       "theme": {
-        "toDark": "다크 모드로 전환",
-        "toLight": "라이트 모드로 전환"
+        "ariaLabel": "{colorMode, select, light {다크 모드로 전환} other {라이트 모드로 전환}}"
       }
     }
   },

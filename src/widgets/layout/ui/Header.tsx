@@ -1,15 +1,32 @@
 'use client';
 
-import Link from 'next/link';
-
 import { MoonIcon, SunIcon } from '@primer/octicons-react';
+import { Select } from '@primer/react';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { useColorMode } from '@/app/providers';
+import { Link, usePathname, useRouter } from '@/shared/i18n/navigation';
+import { routing } from '@/shared/i18n/routing';
+import type { Locale } from '@/shared/i18n/routing';
 
 import styles from './Header.module.scss';
 
+// 로케일별 표시 이름입니다.
+const LOCALE_LABELS: Record<Locale, string> = {
+  en: 'English',
+  ko: '한국어',
+};
+
 export const Header = () => {
+  const t = useTranslations('Layout.Header');
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const handleChangeLocale: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+    router.replace(pathname, { locale: event.target.value as Locale });
+  };
 
   return (
     <header className={styles.container}>
@@ -28,14 +45,26 @@ export const Header = () => {
           </Link>
         </div>
 
-        <button
-          aria-label={colorMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-          className={styles.themeToggle}
-          type="button"
-          onClick={toggleColorMode}
-        >
-          {colorMode === 'light' ? <SunIcon size={20} /> : <MoonIcon size={20} />}
-        </button>
+        <div className={styles.actions}>
+          <Select aria-label={t('language.ariaLabel')} value={locale} onChange={handleChangeLocale}>
+            {routing.locales.map((item) => {
+              return (
+                <Select.Option key={item} value={item}>
+                  {LOCALE_LABELS[item]}
+                </Select.Option>
+              );
+            })}
+          </Select>
+
+          <button
+            aria-label={t('theme.ariaLabel', { colorMode })}
+            className={styles.themeToggle}
+            type="button"
+            onClick={toggleColorMode}
+          >
+            {colorMode === 'light' ? <SunIcon size={20} /> : <MoonIcon size={20} />}
+          </button>
+        </div>
       </div>
     </header>
   );
