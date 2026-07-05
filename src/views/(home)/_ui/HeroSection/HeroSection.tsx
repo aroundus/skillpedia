@@ -1,17 +1,19 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { useState } from 'react';
 
 import { SearchIcon } from '@primer/octicons-react';
 import { Box, FormControl, Hero, Label, Section, TextInput } from '@primer/react-brand';
+import { useTranslations } from 'next-intl';
+
+import { useRouter } from '@/shared/i18n/navigation';
 
 import styles from './HeroSection.module.scss';
 
 const DEFAULT_REPO_URL = 'https://github.com/anthropics/skills';
 
 export const HeroSection = () => {
+  const t = useTranslations('HomePage.HeroSection');
   const router = useRouter();
   const [repo, setRepo] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -30,7 +32,7 @@ export const HeroSection = () => {
       return;
     }
 
-    setErrorMessage('owner/repo 형식으로 작성해 주세요. 예: anthropics/skills');
+    setErrorMessage(t('form.error'));
   };
 
   return (
@@ -57,13 +59,13 @@ export const HeroSection = () => {
             style={{ marginTop: 12 }}
             weight="extrabold"
           >
-            흩어진 스킬 문서를 한곳에서, 정확하게
+            {t('title')}
           </Hero.Heading>
           <Hero.Description
             size="400"
             variant="muted"
           >
-            GitHub 저장소에 흩어져 있는 SKILL.md 문서들을 찾아서 구조화된 형태로 제공합니다.
+            {t('description')}
           </Hero.Description>
           <Box
             marginBlockStart={32}
@@ -75,7 +77,7 @@ export const HeroSection = () => {
                 size="large"
                 validationStatus={errorMessage ? 'error' : undefined}
               >
-                <FormControl.Label>GitHub 저장소 주소</FormControl.Label>
+                <FormControl.Label>{t('form.label')}</FormControl.Label>
                 <TextInput
                   fullWidth
                   leadingVisual={<SearchIcon />}
@@ -96,7 +98,7 @@ export const HeroSection = () => {
                   href="#"
                   size="large"
                 >
-                  문서 보기
+                  {t('form.submit')}
                 </Hero.PrimaryAction>
               </Box>
             </form>
