@@ -23,7 +23,7 @@ interface NetworkNode {
   y: number;
 }
 
-const INK_RGB = '31, 35, 40';
+const DEFAULT_INK_RGB = '31, 35, 40'; // #1f2328
 const LINE_WIDTH = 4;
 const DOT_RADIUS = LINE_WIDTH;
 const BAR_LENGTHS = [0.13, 0.1, 0.11, 0.09, 0.12, 0.1, 0.11, 0.09];
@@ -40,6 +40,13 @@ const generateRandomValue = (min: number, max: number): number => {
 
 const easeOutCubic = (value: number): number => {
   return 1 - (1 - value) ** 3;
+};
+
+// 캔버스 API는 CSS 변수를 해석하지 못해 계산된 color 값에서 잉크 색상을 조회합니다.
+const getInkRgb = (canvas: HTMLCanvasElement): string => {
+  const match = window.getComputedStyle(canvas).color.match(/\d+, \d+, \d+/);
+
+  return match ? match[0] : DEFAULT_INK_RGB;
 };
 
 const createNodes = (): NetworkNode[] => {
@@ -99,6 +106,7 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
     }
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let inkRgb = getInkRgb(canvas);
     const nodes = createNodes();
     const mouse = { isInside: false, x: 0, y: 0 };
     let width = 0;
@@ -222,7 +230,7 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
             const reveal = Math.min(reveals[i], reveals[j]);
 
             if (reveal > 0.01) {
-              context.strokeStyle = `rgba(${INK_RGB}, ${(1 - distance / threshold) * 0.36 * reveal})`;
+              context.strokeStyle = `rgba(${inkRgb}, ${(1 - distance / threshold) * 0.36 * reveal})`;
               context.beginPath();
               context.moveTo(points[i].x, points[i].y);
               context.lineTo(points[j].x, points[j].y);
@@ -238,7 +246,7 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
           const distance = Math.hypot(point.x - mouse.x, point.y - mouse.y);
 
           if (distance < threshold * 1.1) {
-            context.strokeStyle = `rgba(${INK_RGB}, ${(1 - distance / (threshold * 1.1)) * 0.6 * reveals[index]})`;
+            context.strokeStyle = `rgba(${inkRgb}, ${(1 - distance / (threshold * 1.1)) * 0.6 * reveals[index]})`;
             context.beginPath();
             context.moveTo(mouse.x, mouse.y);
             context.lineTo(point.x, point.y);
@@ -266,7 +274,7 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
           const deltaX = Math.cos(barAngle) * halfLength;
           const deltaY = Math.sin(barAngle) * halfLength;
           context.lineWidth = LINE_WIDTH * (0.5 + 0.5 * reveal);
-          context.strokeStyle = `rgba(${INK_RGB}, ${0.92 * reveal})`;
+          context.strokeStyle = `rgba(${inkRgb}, ${0.92 * reveal})`;
           context.beginPath();
           context.moveTo(point.x - deltaX, point.y - deltaY);
           context.lineTo(point.x + deltaX, point.y + deltaY);
@@ -277,7 +285,7 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
 
         // 등장 중에는 점이 살짝 커졌다 돌아오는 팝 효과를 줍니다.
         const overshoot = reveal < 1 ? 1 + Math.sin(reveal * Math.PI) * 0.18 : 1;
-        context.fillStyle = `rgba(${INK_RGB}, ${(node.isAccent ? 1 : 0.8) * reveal})`;
+        context.fillStyle = `rgba(${inkRgb}, ${(node.isAccent ? 1 : 0.8) * reveal})`;
         context.beginPath();
         context.arc(point.x, point.y, DOT_RADIUS * overshoot * (0.3 + 0.7 * reveal), 0, Math.PI * 2);
         context.fill();
@@ -297,11 +305,22 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
     const resizeObserver = new ResizeObserver(resizeCanvas);
     resizeObserver.observe(canvas);
 
+    // 색상 모드 전환 시 잉크 색상을 갱신합니다.
+    const colorModeObserver = new MutationObserver(() => {
+      inkRgb = getInkRgb(canvas);
+
+      if (prefersReducedMotion) {
+        drawNetwork();
+      }
+    });
+    colorModeObserver.observe(document.documentElement, { attributeFilter: ['data-color-mode'] });
+
     if (prefersReducedMotion) {
       drawNetwork();
 
       return () => {
         resizeObserver.disconnect();
+        colorModeObserver.disconnect();
       };
     }
 
@@ -320,6 +339,7 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       resizeObserver.disconnect();
+      colorModeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, [variant]);
