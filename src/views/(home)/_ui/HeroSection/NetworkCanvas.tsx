@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 
+import { useColorMode } from '@/shared/theme';
+
 import styles from './NetworkCanvas.module.scss';
 
 export type HeroVariant = 'float' | 'parallax' | 'orbit';
@@ -23,7 +25,8 @@ interface NetworkNode {
   y: number;
 }
 
-const DEFAULT_INK_RGB = '31, 35, 40'; // #1f2328
+const INK_RGB_LIGHT = '31, 35, 40'; // #1f2328
+const INK_RGB_DARK = '240, 246, 252'; // #f0f6fc
 const LINE_WIDTH = 4;
 const DOT_RADIUS = LINE_WIDTH;
 const BAR_LENGTHS = [0.13, 0.1, 0.11, 0.09, 0.12, 0.1, 0.11, 0.09];
@@ -40,13 +43,6 @@ const generateRandomValue = (min: number, max: number): number => {
 
 const easeOutCubic = (value: number): number => {
   return 1 - (1 - value) ** 3;
-};
-
-// 캔버스 API는 CSS 변수를 해석하지 못해 계산된 color 값에서 잉크 색상을 조회합니다.
-const getInkRgb = (canvas: HTMLCanvasElement): string => {
-  const match = window.getComputedStyle(canvas).color.match(/\d+, \d+, \d+/);
-
-  return match ? match[0] : DEFAULT_INK_RGB;
 };
 
 const createNodes = (): NetworkNode[] => {
@@ -91,6 +87,7 @@ const createNodes = (): NetworkNode[] => {
 
 export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -106,7 +103,7 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
     }
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let inkRgb = getInkRgb(canvas);
+    const inkRgb = colorMode === 'dark' ? INK_RGB_DARK : INK_RGB_LIGHT;
     const nodes = createNodes();
     const mouse = { isInside: false, x: 0, y: 0 };
     let width = 0;
@@ -305,22 +302,11 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
     const resizeObserver = new ResizeObserver(resizeCanvas);
     resizeObserver.observe(canvas);
 
-    // 색상 모드 전환 시 잉크 색상을 갱신합니다.
-    const colorModeObserver = new MutationObserver(() => {
-      inkRgb = getInkRgb(canvas);
-
-      if (prefersReducedMotion) {
-        drawNetwork();
-      }
-    });
-    colorModeObserver.observe(document.documentElement, { attributeFilter: ['data-color-mode'] });
-
     if (prefersReducedMotion) {
       drawNetwork();
 
       return () => {
         resizeObserver.disconnect();
-        colorModeObserver.disconnect();
       };
     }
 
@@ -339,10 +325,9 @@ export const NetworkCanvas = ({ variant }: NetworkCanvasProps) => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       resizeObserver.disconnect();
-      colorModeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
-  }, [variant]);
+  }, [colorMode, variant]);
 
   return (
     <canvas
