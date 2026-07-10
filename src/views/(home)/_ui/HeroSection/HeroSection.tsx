@@ -8,6 +8,8 @@ import { useTranslations } from 'next-intl';
 
 import { useRouter } from '@/shared/i18n/navigation';
 
+import { NetworkCanvas } from './NetworkCanvas';
+
 import styles from './HeroSection.module.scss';
 
 const DEFAULT_REPO_URL = 'https://github.com/anthropics/skills';
@@ -43,6 +45,11 @@ export const HeroSection = () => {
       paddingBlockEnd="spacious"
       paddingBlockStart="spacious"
     >
+      <NetworkCanvas variant="float" />
+      <div
+        aria-hidden
+        className={styles.overlay}
+      />
       <Box
         className={styles.content}
         paddingInlineEnd={40}
