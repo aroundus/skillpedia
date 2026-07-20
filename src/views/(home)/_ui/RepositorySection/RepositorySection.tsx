@@ -18,6 +18,9 @@ interface RepositorySectionProps {
 
 export const RepositorySection = ({ repositoryMetadataList }: RepositorySectionProps) => {
   const t = useTranslations('HomePage.RepositorySection');
+  const totalSkillCount = repositoryMetadataList.reduce((sum, repositoryMetadata) => {
+    return sum + repositoryMetadata.skillCount;
+  }, 0);
 
   return (
     <Section
@@ -26,20 +29,59 @@ export const RepositorySection = ({ repositoryMetadataList }: RepositorySectionP
       paddingBlockEnd="spacious"
       paddingBlockStart="spacious"
     >
-      <Box paddingInlineEnd={40} paddingInlineStart={40}>
+      <Box
+        paddingInlineEnd={40}
+        paddingInlineStart={40}
+      >
         <div className={styles.header}>
-          <Heading as="h2" size="5" weight="bold">
-            {t('title')}
-          </Heading>
-          {repositoryMetadataList.length > 0 ? (
-            <Text as="span" size="200" variant="muted">
-              {t.rich('total', {
-                count: repositoryMetadataList.length,
-                strong: (chunks) => {
-                  return <strong className={styles.totalCount}>{chunks}</strong>;
+          <div>
+            <Heading
+              as="h2"
+              size="3"
+              weight="bold"
+            >
+              {t('title')}
+            </Heading>
+            <Text
+              as="p"
+              className={styles.description}
+              size="200"
+              variant="muted"
+            >
+              {t.rich('description', {
+                code: (chunks) => {
+                  return <code>{chunks}</code>;
                 },
               })}
             </Text>
+          </div>
+          {repositoryMetadataList.length > 0 ? (
+            <div className={styles.meta}>
+              <Text
+                as="span"
+                size="200"
+                variant="muted"
+              >
+                {t.rich('totalCount', {
+                  count: repositoryMetadataList.length,
+                  strong: (chunks) => {
+                    return <strong className={styles.count}>{chunks}</strong>;
+                  },
+                })}
+              </Text>
+              <Text
+                as="span"
+                size="200"
+                variant="muted"
+              >
+                {t.rich('totalSkillCount', {
+                  count: totalSkillCount,
+                  strong: (chunks) => {
+                    return <strong className={styles.count}>{chunks}</strong>;
+                  },
+                })}
+              </Text>
+            </div>
           ) : null}
         </div>
 
@@ -58,7 +100,10 @@ export const RepositorySection = ({ repositoryMetadataList }: RepositorySectionP
             </div>
           </div>
         ) : (
-          <Blankslate narrow spacious>
+          <Blankslate
+            narrow
+            spacious
+          >
             <Blankslate.Visual>
               <RepoIcon size={48} />
             </Blankslate.Visual>

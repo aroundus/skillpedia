@@ -4,12 +4,23 @@
   .header {
     display: flex;
     gap: var(--base-size-16);
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
 
     margin-bottom: var(--base-size-40);
 
-    .totalCount {
+    .description {
+      margin-top: var(--base-size-16);
+      letter-spacing: normal;
+    }
+
+    .meta {
+      display: flex;
+      flex-shrink: 0;
+      gap: var(--base-size-16);
+    }
+
+    .count {
       color: var(--brand-color-text-default);
     }
   }
