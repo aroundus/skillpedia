@@ -44,14 +44,19 @@ export const RepositorySection = ({ repositoryMetadataList }: RepositorySectionP
               {t('title')}
             </Heading>
             <Text
-              as="p"
+              as="div"
               className={styles.description}
               size="200"
               variant="muted"
             >
               {t.rich('description', {
                 claudeCode: (chunks) => {
-                  return <ClaudeCodeToken size="medium" text={chunks} />;
+                  return (
+                    <ClaudeCodeToken
+                      size="medium"
+                      text={chunks}
+                    />
+                  );
                 },
                 code: (chunks) => {
                   return <code>{chunks}</code>;
