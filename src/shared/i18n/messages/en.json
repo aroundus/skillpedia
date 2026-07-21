@@ -2,7 +2,7 @@
   "HomePage": {
     "HeroSection": {
       "title": "<line>Scattered Skill Docs,</line><line>in One Place, Precisely</line>",
-      "description": "Finds Claude Code skills (<code>SKILL.md</code>) scattered across GitHub repositories and presents them in a structured form.",
+      "description": "Finds <claudeCode>Claude Code</claudeCode> skills (<code>SKILL.md</code>) scattered across GitHub repositories and presents them in a structured form.",
       "form": {
         "error": "Please use the owner/repo format. Example: anthropics/skills",
         "label": "GitHub repository URL",
@@ -16,7 +16,7 @@
     },
     "RepositorySection": {
       "title": "Browse Repositories",
-      "description": "Share your own skills for Claude Code and get your repository noticed. Add your repository to <code>repositories.yaml</code> and open a Pull Request, and we'll review it and add it to the list.",
+      "description": "Share your own skills for <claudeCode>Claude Code</claudeCode> and get your repository noticed. Add your repository to <code>repositories.yaml</code> and open a Pull Request, and we'll review it and add it to the list.",
       "skillCount": "{count} SKILL.md",
       "totalCount": "Repositories",
       "totalSkillCount": "Skills",

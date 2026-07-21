@@ -7,6 +7,7 @@ import { Box, FormControl, Hero, Label, Section, TextInput } from '@primer/react
 import { useTranslations } from 'next-intl';
 
 import { useRouter } from '@/shared/i18n/navigation';
+import { ClaudeCodeSymbolMark } from '@/shared/ui';
 
 import { NetworkCanvas } from './NetworkCanvas';
 import { useHeroContent } from './useHeroContent';
@@ -92,6 +93,14 @@ export const HeroSection = ({ isMobile }: HeroSectionProps) => {
             variant="muted"
           >
             {t.rich('description', {
+              claudeCode: (chunks) => {
+                return (
+                  <span style={{ color: '#D97757', whiteSpace: 'nowrap' }}>
+                    <ClaudeCodeSymbolMark style={{ verticalAlign: '-0.15em', marginInlineEnd: '0.25em' }} />
+                    {chunks}
+                  </span>
+                );
+              },
               code: (chunks) => {
                 return <code>{chunks}</code>;
               },

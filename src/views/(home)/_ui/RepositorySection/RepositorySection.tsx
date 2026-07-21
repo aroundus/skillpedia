@@ -6,6 +6,7 @@ import { Box, Heading, Section, Statistic, Text } from '@primer/react-brand';
 import { useTranslations } from 'next-intl';
 
 import type { RepositoryMetadata } from '@/features/repository-metadata/api';
+import { ClaudeCodeSymbolMark } from '@/shared/ui';
 
 import { RepositoryCard } from './RepositoryCard';
 import { SpotlightCanvas } from './SpotlightCanvas';
@@ -49,6 +50,14 @@ export const RepositorySection = ({ repositoryMetadataList }: RepositorySectionP
               variant="muted"
             >
               {t.rich('description', {
+                claudeCode: (chunks) => {
+                  return (
+                    <span style={{ color: '#D97757', whiteSpace: 'nowrap' }}>
+                      <ClaudeCodeSymbolMark style={{ verticalAlign: '-0.15em', marginInlineEnd: '0.25em' }} />
+                      {chunks}
+                    </span>
+                  );
+                },
                 code: (chunks) => {
                   return <code>{chunks}</code>;
                 },

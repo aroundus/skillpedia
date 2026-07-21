@@ -1,0 +1,1 @@
+export { ClaudeCodeSymbolMark } from './ClaudeCodeSymbolMark';
