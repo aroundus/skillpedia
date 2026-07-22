@@ -26,8 +26,12 @@ export const FaqSection = () => {
         paddingInlineStart={40}
       >
         <FAQ className={styles.inner}>
-          <FAQ.Heading as="h2">{t('title')}</FAQ.Heading>
-          <FAQ.Subheading>{t('description')}</FAQ.Subheading>
+          <FAQ.Heading
+            as="h2"
+            weight="bold"
+          >
+            {t('title')}
+          </FAQ.Heading>
           {items.map((item, index) => {
             return (
               <FAQ.Item key={item.question}>
