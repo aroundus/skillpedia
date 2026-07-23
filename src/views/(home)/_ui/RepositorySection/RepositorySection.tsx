@@ -2,7 +2,7 @@
 
 import { RepoIcon } from '@primer/octicons-react';
 import { Blankslate } from '@primer/react/experimental';
-import { Box, Heading, Section, Statistic, Text } from '@primer/react-brand';
+import { AnimationProvider, Box, Heading, Section, Statistic, Text } from '@primer/react-brand';
 import { useTranslations } from 'next-intl';
 
 import type { RepositoryMetadata } from '@/features/repository-metadata/api';
@@ -95,16 +95,24 @@ export const RepositorySection = ({ repositoryMetadataList }: RepositorySectionP
         {repositoryMetadataList.length > 0 ? (
           <div className={styles.inner}>
             <SpotlightCanvas />
-            <div className={styles.content}>
-              {repositoryMetadataList.map((repositoryMetadata) => {
-                return (
-                  <RepositoryCard
-                    key={`${repositoryMetadata.owner}/${repositoryMetadata.repo}`}
-                    repositoryMetadata={repositoryMetadata}
-                  />
-                );
-              })}
-            </div>
+            <AnimationProvider
+              animationTrigger="on-visible"
+              autoStaggerChildren={false}
+              runOnce
+              visibilityOptions={15}
+            >
+              <div className={styles.content}>
+                {repositoryMetadataList.map((repositoryMetadata, index) => {
+                  return (
+                    <RepositoryCard
+                      index={index}
+                      key={`${repositoryMetadata.owner}/${repositoryMetadata.repo}`}
+                      repositoryMetadata={repositoryMetadata}
+                    />
+                  );
+                })}
+              </div>
+            </AnimationProvider>
           </div>
         ) : (
           <Blankslate
