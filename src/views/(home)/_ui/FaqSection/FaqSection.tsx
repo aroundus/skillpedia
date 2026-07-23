@@ -1,9 +1,7 @@
 'use client';
 
-import { Box, FAQ, Section } from '@primer/react-brand';
+import { AnimationProvider, Box, FAQ, Section } from '@primer/react-brand';
 import { useTranslations } from 'next-intl';
-
-import styles from './FaqSection.module.scss';
 
 interface FaqItem {
   answer: string;
@@ -17,7 +15,6 @@ export const FaqSection = () => {
   return (
     <Section
       as="section"
-      className={styles.container}
       paddingBlockEnd="spacious"
       paddingBlockStart="spacious"
     >
@@ -25,30 +22,39 @@ export const FaqSection = () => {
         paddingInlineEnd={40}
         paddingInlineStart={40}
       >
-        <FAQ className={styles.inner}>
-          <FAQ.Heading
-            as="h2"
-            weight="bold"
+        <AnimationProvider animationTrigger="on-visible">
+          <FAQ
+            animate={{
+              variant: 'slide-in-up',
+            }}
           >
-            {t('title')}
-          </FAQ.Heading>
-          {items.map((item, index) => {
-            return (
-              <FAQ.Item key={item.question}>
-                <FAQ.Question>{item.question}</FAQ.Question>
-                <FAQ.Answer>
-                  <p>
-                    {t.rich(`items.${index}.answer`, {
-                      code: (chunks) => {
-                        return <code>{chunks}</code>;
-                      },
-                    })}
-                  </p>
-                </FAQ.Answer>
-              </FAQ.Item>
-            );
-          })}
-        </FAQ>
+            <FAQ.Heading
+              as="h2"
+              weight="bold"
+            >
+              {t('title')}
+            </FAQ.Heading>
+            {items.map((item, index) => {
+              return (
+                <FAQ.Item
+                  key={item.question}
+                  open={index === 0}
+                >
+                  <FAQ.Question>{item.question}</FAQ.Question>
+                  <FAQ.Answer>
+                    <p>
+                      {t.rich(`items.${index}.answer`, {
+                        code: (chunks) => {
+                          return <code>{chunks}</code>;
+                        },
+                      })}
+                    </p>
+                  </FAQ.Answer>
+                </FAQ.Item>
+              );
+            })}
+          </FAQ>
+        </AnimationProvider>
       </Box>
     </Section>
   );

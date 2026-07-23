@@ -27,19 +27,26 @@
     },
     "FaqSection": {
       "title": "Frequently asked questions",
-      "description": "Before you find the skill you've been looking for, here are the first questions that come to mind.",
       "items": [
         {
           "question": "What is Skillpedia?",
-          "answer": "An open-source project, built for Claude Code users, that collects <code>SKILL.md</code> documents scattered across GitHub repositories and presents them in a structured form. It is an unofficial project run by an individual, not an official GitHub service."
+          "answer": "An open-source project that collects <code>SKILL.md</code> documents scattered across GitHub repositories and presents them in a structured form. It is an unofficial project run by an individual, not an official GitHub service."
         },
         {
-          "question": "Is it for Claude Code users?",
-          "answer": "Yes. Skillpedia works with the skills (<code>SKILL.md</code>) used in Claude Code, so it is a project for Claude Code users."
+          "question": "How do I add my repository to the list?",
+          "answer": "Add it to the <code>repositories.yaml</code> file at your project root in the <code>owner/repo</code> format, and it will show up in the list."
+        },
+        {
+          "question": "What is a SKILL.md file?",
+          "answer": "A verified guide written by engineers so that AI agents can use a tool correctly. Skillpedia delivers that guide in the most readable form."
         },
         {
           "question": "Can I use private repositories?",
           "answer": "Yes. Install it on your own infrastructure and register repositories via the <code>REPOSITORIES</code> environment variable in GitHub Actions to use them safely without exposing them externally."
+        },
+        {
+          "question": "How often are the docs updated?",
+          "answer": "Whenever a repository's <code>SKILL.md</code> changes, it is automatically re-collected and re-structured so the content stays up to date."
         }
       ]
     }

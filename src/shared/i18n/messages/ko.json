@@ -27,19 +27,26 @@
     },
     "FaqSection": {
       "title": "자주 묻는 질문",
-      "description": "원하던 스킬을 만나기 전, 먼저 떠오르는 질문들을 모았습니다.",
       "items": [
         {
           "question": "Skillpedia는 무엇인가요?",
-          "answer": "Claude Code 사용자를 위해, GitHub 저장소 곳곳에 흩어진 <code>SKILL.md</code> 문서를 수집해 구조화된 형태로 보여주는 오픈소스 프로젝트입니다. GitHub의 공식 서비스가 아닌, 개인이 운영하는 비공식 프로젝트입니다."
+          "answer": "GitHub 저장소에 흩어진 <code>SKILL.md</code> 문서를 수집해 구조화된 형태로 보여주는 오픈소스 프로젝트입니다. GitHub의 공식 서비스가 아닌, 개인이 운영하는 비공식 프로젝트입니다."
         },
         {
-          "question": "Claude Code 사용자 대상인가요?",
-          "answer": "네. Skillpedia는 Claude Code에서 사용하는 스킬(<code>SKILL.md</code>)을 다루므로 Claude Code 사용자를 위한 프로젝트입니다."
+          "question": "제 저장소를 목록에 추가하려면 어떻게 하나요?",
+          "answer": "프로젝트 루트의 <code>repositories.yaml</code> 파일에 <code>owner/repo</code> 형식으로 추가하면 목록에 반영됩니다."
         },
         {
-          "question": "프라이빗 저장소도 사용할 수 있나요?",
+          "question": "SKILL.md는 어떤 파일인가요?",
+          "answer": "AI 에이전트가 도구를 정확하게 사용할 수 있도록 엔지니어가 작성하는 검증된 지침 문서입니다. Skillpedia는 이 문서를 가장 읽기 좋은 형태로 전달합니다."
+        },
+        {
+          "question": "비공개 저장소도 사용할 수 있나요?",
           "answer": "네. 사내 인프라에 직접 설치한 뒤 GitHub Actions의 <code>REPOSITORIES</code> 환경 변수로 등록하면 외부에 공개하지 않고 안전하게 사용할 수 있습니다."
+        },
+        {
+          "question": "문서는 얼마나 자주 업데이트되나요?",
+          "answer": "저장소의 <code>SKILL.md</code>가 변경되면 자동으로 다시 수집·구조화하여 항상 최신 내용을 반영합니다."
         }
       ]
     }
