@@ -12,9 +12,13 @@ export const ClaudeCodeToken = ({ size, text }: ClaudeCodeTokenProps) => {
   return (
     <Token
       as="span"
-      leadingVisual={ClaudeCodeSymbolMark}
       size={size}
-      text={text}
+      text={
+        <>
+          <ClaudeCodeSymbolMark style={{ verticalAlign: '-0.15em', marginInlineEnd: '0.25em' }} />
+          {text}
+        </>
+      }
     />
   );
 };

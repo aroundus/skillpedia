@@ -88,7 +88,6 @@ export const HeroSection = ({ isMobile }: HeroSectionProps) => {
             })}
           </Hero.Heading>
           <Hero.Description
-            as="div"
             data-hero="3"
             size="400"
             variant="muted"

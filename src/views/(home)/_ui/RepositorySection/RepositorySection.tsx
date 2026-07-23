@@ -44,7 +44,7 @@ export const RepositorySection = ({ repositoryMetadataList }: RepositorySectionP
               {t('title')}
             </Heading>
             <Text
-              as="div"
+              as="p"
               className={styles.description}
               size="200"
               variant="muted"
