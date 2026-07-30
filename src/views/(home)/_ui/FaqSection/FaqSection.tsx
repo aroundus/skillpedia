@@ -3,6 +3,8 @@
 import { AnimationProvider, Box, FAQ, Section } from '@primer/react-brand';
 import { useTranslations } from 'next-intl';
 
+import { ClaudeCodeToken } from '@/shared/ui';
+
 interface FaqItem {
   answer: string;
   question: string;
@@ -44,6 +46,14 @@ export const FaqSection = () => {
                   <FAQ.Answer>
                     <p>
                       {t.rich(`items.${index}.answer`, {
+                        claudeCode: (chunks) => {
+                          return (
+                            <ClaudeCodeToken
+                              size="medium"
+                              text={chunks}
+                            />
+                          );
+                        },
                         code: (chunks) => {
                           return <code>{chunks}</code>;
                         },

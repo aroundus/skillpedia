@@ -30,23 +30,15 @@
       "items": [
         {
           "question": "What is Skillpedia?",
-          "answer": "An open-source project that collects <code>SKILL.md</code> documents scattered across GitHub repositories and presents them in a structured form. It is an unofficial project run by an individual, not an official GitHub service."
+          "answer": "Skillpedia is an open-source project that gathers skill docs scattered across GitHub repositories and provides them in a structured form."
         },
         {
-          "question": "How do I add my repository to the list?",
-          "answer": "Add it to the <code>repositories.yaml</code> file at your project root in the <code>owner/repo</code> format, and it will show up in the list."
+          "question": "What is a skill?",
+          "answer": "A guide written by engineers so that AI agents can use a tool correctly. <claudeCode>Claude Code</claudeCode> reads it, and each skill lives in a <code>SKILL.md</code> file in a repository."
         },
         {
-          "question": "What is a SKILL.md file?",
-          "answer": "A verified guide written by engineers so that AI agents can use a tool correctly. Skillpedia delivers that guide in the most readable form."
-        },
-        {
-          "question": "Can I use private repositories?",
-          "answer": "Yes. Install it on your own infrastructure and register repositories via the <code>REPOSITORIES</code> environment variable in GitHub Actions to use them safely without exposing them externally."
-        },
-        {
-          "question": "How often are the docs updated?",
-          "answer": "Whenever a repository's <code>SKILL.md</code> changes, it is automatically re-collected and re-structured so the content stays up to date."
+          "question": "How does Skillpedia fetch skill docs?",
+          "answer": "Each time you open a document, Skillpedia fetches the skill file from the default branch of its GitHub repository. The repository list on the home page refreshes every hour."
         }
       ]
     }
