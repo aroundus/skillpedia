@@ -12,7 +12,9 @@
     "PrivateRepositorySection": {
       "title": "Private Repo Skills,<br></br>Safely Within Your Team",
       "description": "Install it directly on your own infrastructure. Structure your internal repository's skill docs safely without exposing them externally.",
-      "link": "Read the Guide"
+      "link": "Read the Install Guide",
+      "terminalAppComment": "# https://github.com/settings/apps/new > Create a new GitHub App",
+      "envKeyComment": "# Private Keys > Download private-key.pem"
     },
     "RepositorySection": {
       "title": "Browse Repositories",
