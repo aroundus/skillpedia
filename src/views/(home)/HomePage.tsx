@@ -15,7 +15,10 @@ export const HomePage = ({ isMobile, isPublicDomain, repositoryMetadataList }: H
   return (
     <div className={styles.container}>
       <HeroSection isMobile={isMobile} />
-      <RepositorySection repositoryMetadataList={repositoryMetadataList} />
+      <RepositorySection
+        isMobile={isMobile}
+        repositoryMetadataList={repositoryMetadataList}
+      />
       <FaqSection />
       {(isPublicDomain || process.env.NODE_ENV === 'development') && <PrivateRepositorySection />}
       <Layout.Footer />

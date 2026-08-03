@@ -22,6 +22,7 @@
       "skillCount": "{count} SKILL.md",
       "totalCount": "전체 저장소",
       "totalSkillCount": "전체 스킬",
+      "more": "더 보기",
       "Empty": {
         "title": "저장소 목록 구성하기",
         "description": "아직 등록된 저장소가 없습니다. <code>repositories.yaml</code>에 저장소를 추가하고 Pull Request를 열면 검토 후 목록에 등록해 드립니다."

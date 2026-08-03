@@ -22,6 +22,7 @@
       "skillCount": "{count} SKILL.md",
       "totalCount": "Repositories",
       "totalSkillCount": "Skills",
+      "more": "Show more",
       "Empty": {
         "title": "Set up your repository list.",
         "description": "No repositories have been registered yet. Add your repository to <code>repositories.yaml</code> and open a Pull Request, and we'll review it and add it to the list."
