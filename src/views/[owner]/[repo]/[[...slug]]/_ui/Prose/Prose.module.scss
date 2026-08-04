@@ -66,6 +66,18 @@
     gap: var(--base-size-4);
   }
 
+  li p {
+    margin-block: 0;
+
+    & + p {
+      margin-block-start: var(--base-size-8);
+    }
+  }
+
+  li :is(ul, ol) {
+    margin-block-start: var(--base-size-4);
+  }
+
   // 표: 전체 격자 테두리 + 헤더 배경
   table {
     overflow-x: auto;
