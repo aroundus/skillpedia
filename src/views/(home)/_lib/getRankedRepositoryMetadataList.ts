@@ -1,7 +1,6 @@
 import { getRepositoryMetadata } from '@/features/repository-metadata/api';
 import type { RepositoryMetadata } from '@/features/repository-metadata/api';
-
-import { getRepositories } from './getRepositories';
+import { getRepositories } from '@/shared/lib';
 
 const RANK_COUNT = 3;
 const SKILL_COUNT_WEIGHT = 0.6;
