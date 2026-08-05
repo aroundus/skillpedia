@@ -1,4 +1,4 @@
-@use 'breakpoint' as *;
+@use 'variables' as *;
 
 // Primer 오버레이는 z-index 1로 body 끝에 렌더링되므로, 헤더도 같은 층을 쓰면 오버레이가 헤더를 덮습니다.
 .container {

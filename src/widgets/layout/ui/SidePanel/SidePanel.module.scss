@@ -1,4 +1,5 @@
-@use 'breakpoint' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
 
 .container {
   display: flex;
@@ -49,6 +50,10 @@
 
     height: var(--base-size-64);
     padding-inline: var(--base-size-16);
+  }
+
+  :global([class*='DialogOverflowWrapper']) {
+    @include hide-scrollbar('y');
   }
 }
 
