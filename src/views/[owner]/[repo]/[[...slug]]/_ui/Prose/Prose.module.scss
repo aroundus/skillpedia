@@ -78,6 +78,11 @@
     margin-block-start: var(--base-size-4);
   }
 
+  // Primer 목록 항목은 flex 컨테이너입니다. 목록 항목의 내용 래퍼가 표의 max-content 너비를 떠안지 않도록 최소 너비를 풉니다.
+  li > span {
+    min-width: 0;
+  }
+
   // 표: 전체 격자 테두리 + 헤더 배경
   table {
     overflow-x: auto;
