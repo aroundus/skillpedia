@@ -117,12 +117,10 @@
     }
   }
 
-  // GFM 할 일 목록 항목: 대시 불릿 없이 체크박스만 표시합니다.
   .taskItem {
     display: flex;
     gap: var(--base-size-8);
     align-items: baseline;
-    list-style: none;
   }
 
   // 인라인 코드
