@@ -1,6 +1,7 @@
 import { setRequestLocale } from 'next-intl/server';
 
 import { getRepositoryTreeNodes } from '@/features/repository-tree/api';
+import { Fab } from '@/widgets/fab/ui';
 import { Layout } from '@/widgets/layout/ui';
 
 interface OwnerRepoLayoutProps {
@@ -27,6 +28,9 @@ export default async function OwnerRepoLayout({ children, params }: OwnerRepoLay
         treeNodesPromise={treeNodesPromise}
       />
       <Layout.Content>{children}</Layout.Content>
+      <Fab.Container>
+        <Fab.ScrollToTopButton />
+      </Fab.Container>
     </Layout>
   );
 }
