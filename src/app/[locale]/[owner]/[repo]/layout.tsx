@@ -3,12 +3,12 @@ import { setRequestLocale } from 'next-intl/server';
 import { getRepositoryTreeNodes } from '@/features/repository-tree/api';
 import { Layout } from '@/widgets/layout/ui';
 
-interface RepoLayoutProps {
+interface OwnerRepoLayoutProps {
   children: React.ReactNode;
   params: Promise<{ locale: string; owner: string; repo: string }>;
 }
 
-export default async function RepoLayout({ children, params }: RepoLayoutProps) {
+export default async function OwnerRepoLayout({ children, params }: OwnerRepoLayoutProps) {
   const { locale, owner, repo } = await params;
   setRequestLocale(locale);
 
