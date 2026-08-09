@@ -1,0 +1,24 @@
+@use 'variables' as *;
+
+.container {
+  pointer-events: none;
+
+  position: fixed;
+  z-index: 1;
+  right: var(--base-size-24);
+  bottom: var(--base-size-24);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-8);
+
+  // 컨테이너는 화면 전체를 덮지 않고 자식만 클릭을 받습니다.
+  > * {
+    pointer-events: auto;
+  }
+
+  @media (width < $breakpoint-medium) {
+    right: var(--base-size-16);
+    bottom: var(--base-size-16);
+  }
+}
