@@ -78,7 +78,7 @@ export const Header = ({ owner, repo, treeNodesPromise }: HeaderProps) => {
             <span className={styles.title}>Skillpedia</span>
           </Link>
 
-          <span className={styles.claudeCode}>
+          <span className={styles.tagline}>
             for
             <ClaudeCodeSymbolMark />
             Claude Code
