@@ -1,4 +1,4 @@
-<!-- This file is translated from README.ko.md (source of truth). Update README.ko.md first, then sync here. -->
+<!-- This file is a translation of README.ko.md (source of truth). -->
 
 <div align="center">
 
