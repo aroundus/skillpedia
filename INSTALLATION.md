@@ -41,7 +41,7 @@ On the app settings page, click **Generate a private key** under **Private keys*
 
 In **Install App**, select the organization and choose the repositories to collect `SKILL.md` files from. Only the repositories with the app installed can serve private documents.
 
-## Environment Variables
+## Environment variables
 
 Copy the `.env.local.example` file to create the `.env.local` file.
 
@@ -64,7 +64,7 @@ Add the following environment variables only when you need them.
 | `GITHUB_TOKEN`              | Used when public repositories without the app installed are listed together     |
 | `HTTPS_PROXY`, `HTTP_PROXY` | Sets the proxy URL on an internal network that reaches the internet via a proxy |
 
-## Repository List
+## Repository list
 
 Copy the `repositories.example.yaml` file to create the `repositories.yaml` file, and list the repositories to collect in `{owner}/{repo}` format.
 

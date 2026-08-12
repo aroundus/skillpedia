@@ -77,7 +77,7 @@ cp repositories.example.yaml repositories.yaml
 - anthropics/skills
 ```
 
-운영 환경에서는 같은 YAML 내용을 `REPOSITORIES` 환경 변수로 주입합니다. `REPOSITORIES` 환경 변수를 정의한 경우 `repositories.yaml` 파일을 읽지 않습니다.
+운영 환경인 경우 같은 YAML 내용을 `REPOSITORIES` 환경 변수로 주입합니다. `REPOSITORIES` 환경 변수를 정의한 경우 `repositories.yaml` 파일을 읽지 않습니다.
 
 ## 실행
 
@@ -87,7 +87,7 @@ npm install
 npm run dev
 ```
 
-앱은 `http://localhost:3000`에서 실행합니다.
+브라우저에서 `http://localhost:3000`으로 접속합니다.
 
 ## 배포
 
