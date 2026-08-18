@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 
-import { UnderlineNav } from '@primer/react';
+import { Avatar, UnderlineNav } from '@primer/react';
 import { Breadcrumbs, Heading, Stack, Text } from '@primer/react-brand';
-import { useTranslations } from 'next-intl';
+import { useFormatter, useNow, useTranslations } from 'next-intl';
+
+import type { RepositoryFileMetadata } from '@/features/repository-metadata/api';
 
 import type { ArticleContent, Breadcrumb } from '../../_lib';
 import { Prose } from '../Prose';
@@ -16,6 +18,7 @@ export interface ArticleTab {
   content: ArticleContent;
   filePath: string;
   label: 'README' | 'SKILL';
+  metadata?: RepositoryFileMetadata | null;
 }
 
 interface ArticleProps {
@@ -29,8 +32,11 @@ interface ArticleProps {
 
 export const Article = ({ breadcrumbs, owner, repo, tabs, title, description }: ArticleProps) => {
   const t = useTranslations('OwnerRepoSlugPage.Article');
+  const format = useFormatter();
+  const now = useNow();
   const [activeIndex, setActiveIndex] = useState(0);
   const activeTab = tabs[activeIndex] ?? tabs[0];
+  const metadata = activeTab?.metadata;
 
   // 목차에는 h2, h3만 노출합니다.
   const tocHeadings = (activeTab?.content.headings ?? []).filter((heading) => {
@@ -71,6 +77,36 @@ export const Article = ({ breadcrumbs, owner, repo, tabs, title, description }: 
             >
               {title}
             </Heading>
+
+            {metadata && (
+              <div className={styles.metadata}>
+                {metadata.authorAvatarUrl && (
+                  <Avatar
+                    alt=""
+                    size={20}
+                    src={metadata.authorAvatarUrl}
+                  />
+                )}
+                <Text
+                  as="span"
+                  size="200"
+                  variant="muted"
+                >
+                  {t('metadata.description', {
+                    authorName: metadata.authorName,
+                    committedAt: format.relativeTime(new Date(metadata.committedAt), now),
+                  })}
+                </Text>
+                <a
+                  href={metadata.htmlUrl}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {metadata.message}
+                </a>
+              </div>
+            )}
+
             {description && (
               <Text
                 as="p"
