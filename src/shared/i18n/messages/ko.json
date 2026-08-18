@@ -97,6 +97,9 @@
   },
   "OwnerRepoSlugPage": {
     "Article": {
+      "metadata": {
+        "description": "{authorName} 님이 {committedAt} 변경"
+      },
       "tabs": {
         "ariaLabel": "문서 유형"
       }

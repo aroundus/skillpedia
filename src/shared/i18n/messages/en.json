@@ -97,6 +97,9 @@
   },
   "OwnerRepoSlugPage": {
     "Article": {
+      "metadata": {
+        "description": "Updated by {authorName} {committedAt}"
+      },
       "tabs": {
         "ariaLabel": "Document type"
       }
