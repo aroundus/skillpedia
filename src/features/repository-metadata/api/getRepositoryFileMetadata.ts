@@ -6,11 +6,14 @@ import {
   getRepositoryOctokit,
 } from '@/shared/api/github';
 
+export interface RepositoryFileContributor {
+  avatarUrl: string;
+  name: string;
+}
+
 export interface RepositoryFileMetadata {
-  authorAvatarUrl: string;
-  authorName: string;
-  authorUrl: string;
   committedAt: string;
+  contributors: RepositoryFileContributor[];
   htmlUrl: string;
   message: string;
 }
@@ -21,11 +24,14 @@ export interface GetRepositoryFileMetadataRequest {
   repo: string;
 }
 
+// GitHub API가 한 번에 돌려주는 커밋 상한입니다.
+const COMMIT_LIMIT_COUNT = 100;
+
 /**
  * 파일 메타데이터 조회
  *
  * @description
- * 파일의 마지막 커밋 1건에서 작성자와 작업 일시, 커밋 링크와 메시지를 추립니다.
+ * 파일의 최근 커밋 목록에서 마지막 커밋의 작업 일시·링크·메시지와 기여자 목록을 추립니다.
  * 커밋이 없거나 조회에 실패하면 null을 반환합니다. 메타데이터는 본문 노출을 막지 않는 부가 정보이므로 오류로 처리하지 않습니다.
  */
 export const getRepositoryFileMetadata = ({
@@ -41,7 +47,7 @@ export const getRepositoryFileMetadata = ({
         const { data } = await octokit.rest.repos.listCommits({
           owner,
           path: filePath,
-          per_page: 1,
+          per_page: COMMIT_LIMIT_COUNT,
           repo,
         });
         const [commit] = data;
@@ -50,11 +56,21 @@ export const getRepositoryFileMetadata = ({
           return null;
         }
 
+        const contributorMap = new Map<string, RepositoryFileContributor>();
+
+        for (const fileCommit of data) {
+          const name = fileCommit.commit.author?.name ?? '';
+
+          if (!name || contributorMap.has(name)) {
+            continue;
+          }
+
+          contributorMap.set(name, { avatarUrl: fileCommit.author?.avatar_url ?? '', name });
+        }
+
         return {
-          authorAvatarUrl: commit.author?.avatar_url ?? '',
-          authorName: commit.commit.author?.name ?? '',
-          authorUrl: commit.author?.html_url ?? '',
           committedAt: commit.commit.author?.date ?? commit.commit.committer?.date ?? '',
+          contributors: [...contributorMap.values()],
           htmlUrl: commit.html_url,
           message: commit.commit.message.split('\n')[0],
         };

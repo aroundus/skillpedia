@@ -97,12 +97,12 @@
   },
   "OwnerRepoSlugPage": {
     "Article": {
-      "metadata": {
-        "description": "{authorName} 님이 {committedAt} 변경"
-      },
       "tabs": {
         "ariaLabel": "문서 유형"
       }
+    },
+    "ArticleMetadata": {
+      "description": "<name>{authorName}</name> 님{otherCount, plural, =0 {} other { 외 #명}}이 작성 · {committedAt} 변경"
     },
     "Empty": {
       "description": "<code>SKILL.md</code> 문서를 찾을 수 없습니다."

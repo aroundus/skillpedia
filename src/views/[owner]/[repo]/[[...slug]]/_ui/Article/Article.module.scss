@@ -4,20 +4,6 @@
   max-width: 1080px;
   padding: var(--base-size-40) var(--base-size-24);
 
-  .metadata {
-    display: flex;
-    gap: var(--base-size-8);
-    align-items: center;
-    min-width: 0;
-
-    a {
-      overflow: hidden;
-      color: var(--brand-color-text-muted);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  }
-
   .description {
     white-space: pre-line;
   }

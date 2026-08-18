@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 
-import { Avatar, UnderlineNav } from '@primer/react';
+import { UnderlineNav } from '@primer/react';
 import { Breadcrumbs, Heading, Stack, Text } from '@primer/react-brand';
-import { useFormatter, useNow, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 import type { RepositoryFileMetadata } from '@/features/repository-metadata/api';
 
 import type { ArticleContent, Breadcrumb } from '../../_lib';
+import { ArticleMetadata } from '../ArticleMetadata';
 import { Prose } from '../Prose';
 import { Toc } from '../Toc';
 
@@ -32,8 +33,6 @@ interface ArticleProps {
 
 export const Article = ({ breadcrumbs, owner, repo, tabs, title, description }: ArticleProps) => {
   const t = useTranslations('OwnerRepoSlugPage.Article');
-  const format = useFormatter();
-  const now = useNow();
   const [activeIndex, setActiveIndex] = useState(0);
   const activeTab = tabs[activeIndex] ?? tabs[0];
   const metadata = activeTab?.metadata;
@@ -78,35 +77,6 @@ export const Article = ({ breadcrumbs, owner, repo, tabs, title, description }: 
               {title}
             </Heading>
 
-            {metadata && (
-              <div className={styles.metadata}>
-                {metadata.authorAvatarUrl && (
-                  <Avatar
-                    alt=""
-                    size={20}
-                    src={metadata.authorAvatarUrl}
-                  />
-                )}
-                <Text
-                  as="span"
-                  size="200"
-                  variant="muted"
-                >
-                  {t('metadata.description', {
-                    authorName: metadata.authorName,
-                    committedAt: format.relativeTime(new Date(metadata.committedAt), now),
-                  })}
-                </Text>
-                <a
-                  href={metadata.htmlUrl}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  {metadata.message}
-                </a>
-              </div>
-            )}
-
             {description && (
               <Text
                 as="p"
@@ -117,6 +87,8 @@ export const Article = ({ breadcrumbs, owner, repo, tabs, title, description }: 
                 {description}
               </Text>
             )}
+
+            {metadata && <ArticleMetadata metadata={metadata} />}
           </Stack>
         </Stack>
 

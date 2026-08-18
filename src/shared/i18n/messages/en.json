@@ -97,12 +97,12 @@
   },
   "OwnerRepoSlugPage": {
     "Article": {
-      "metadata": {
-        "description": "Updated by {authorName} {committedAt}"
-      },
       "tabs": {
         "ariaLabel": "Document type"
       }
+    },
+    "ArticleMetadata": {
+      "description": "Written by <name>{authorName}</name>{otherCount, plural, =0 {} other { and # others}} · Updated {committedAt}"
     },
     "Empty": {
       "description": "No <code>SKILL.md</code> document was found."

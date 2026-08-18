@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-6);
+
+  padding-block: var(--base-size-12);
+  border-block: 1px solid var(--brand-color-border-muted);
+
+  .top {
+    display: flex;
+    gap: var(--base-size-12);
+    align-items: center;
+
+    .avatars {
+      display: flex;
+      flex-shrink: 0;
+      padding-inline-start: var(--base-size-6);
+
+      .avatar {
+        margin-inline-start: calc(var(--base-size-6) * -1);
+        border: 1.5px solid var(--brand-color-canvas-default);
+      }
+    }
+
+    .author {
+      font-weight: var(--base-text-weight-semibold);
+      color: var(--brand-color-text-default);
+    }
+  }
+
+  .commit {
+    display: flex;
+    gap: var(--base-size-6);
+    align-items: flex-start;
+
+    padding-inline-start: var(--base-size-6);
+
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--brand-color-text-muted);
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    svg {
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+  }
+}
