@@ -93,7 +93,10 @@ export const Article = ({ breadcrumbs, owner, repo, tabs, title, description }: 
         </Stack>
 
         {tabs.length > 1 && (
-          <UnderlineNav aria-label={t('tabs.ariaLabel')}>
+          <UnderlineNav
+            aria-label={t('tabs.ariaLabel')}
+            className={styles.tabs}
+          >
             {tabs.map((tab, index) => {
               return (
                 <UnderlineNav.Item

@@ -1,7 +1,7 @@
 'use client';
 
 import { GitCommitIcon } from '@primer/octicons-react';
-import { Avatar } from '@primer/react';
+import { Avatar, AvatarStack, RelativeTime } from '@primer/react';
 import { Text } from '@primer/react-brand';
 import { useFormatter, useNow, useTranslations } from 'next-intl';
 
@@ -13,15 +13,15 @@ interface ArticleMetadataProps {
   metadata: RepositoryFileMetadata;
 }
 
-const AVATAR_LIMIT_COUNT = 6;
+const AVATAR_LIMIT_COUNT = 3;
 
 export const ArticleMetadata = ({ metadata }: ArticleMetadataProps) => {
   const t = useTranslations('OwnerRepoSlugPage.ArticleMetadata');
-  const format = useFormatter();
+  const formatter = useFormatter();
   const now = useNow();
 
-  const { committedAt, contributors, htmlUrl, message } = metadata;
-  const avatarContributors = contributors
+  const committedAt = new Date(metadata.committedAt);
+  const avatarContributors = metadata.contributors
     .filter((contributor) => {
       return Boolean(contributor.avatarUrl);
     })
@@ -29,46 +29,61 @@ export const ArticleMetadata = ({ metadata }: ArticleMetadataProps) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.top}>
-        {avatarContributors.length > 0 && (
-          <span className={styles.avatars}>
-            {avatarContributors.map((contributor) => {
-              return (
-                <Avatar
-                  alt=""
-                  className={styles.avatar}
-                  key={contributor.name}
-                  size={24}
-                  src={contributor.avatarUrl}
-                />
-              );
-            })}
-          </span>
-        )}
-        <Text
-          as="span"
-          size="100"
-          variant="muted"
+      {avatarContributors.length > 0 && (
+        <AvatarStack
+          className={styles.avatarStack}
+          size={24}
         >
-          {t.rich('description', {
-            authorName: contributors[0]?.name ?? '',
-            committedAt: format.relativeTime(new Date(committedAt), now),
-            name: (chunks) => {
-              return <span className={styles.author}>{chunks}</span>;
-            },
-            otherCount: Math.max(contributors.length - 1, 0),
+          {avatarContributors.map((contributor) => {
+            return (
+              <Avatar
+                alt=""
+                key={contributor.name}
+                size={24}
+                src={contributor.avatarUrl}
+              />
+            );
           })}
-        </Text>
-      </div>
+        </AvatarStack>
+      )}
+
+      <Text
+        as="span"
+        className={styles.author}
+        size="100"
+        variant="muted"
+      >
+        {t.rich('description', {
+          authorName: metadata.contributors[0]?.name ?? '',
+          name: (chunks) => {
+            return <span className={styles.name}>{chunks}</span>;
+          },
+          otherCount: Math.max(metadata.contributors.length - 1, 0),
+          time: () => {
+            return (
+              // 자식을 비우면 영어 일시를, format을 비우면 오래된 커밋을 일시로 노출합니다.
+              <RelativeTime
+                className={styles.committedAt}
+                date={committedAt}
+                format="relative"
+                title={formatter.dateTime(committedAt, { dateStyle: 'full', timeStyle: 'short' })}
+              >
+                {formatter.relativeTime(committedAt, now)}
+              </RelativeTime>
+            );
+          },
+        })}
+      </Text>
 
       <a
         className={styles.commit}
-        href={htmlUrl}
+        href={metadata.htmlUrl}
         rel="noreferrer"
         target="_blank"
+        title={metadata.message}
       >
         <GitCommitIcon size={12} />
-        <span>{message}</span>
+        <span className={styles.message}>{metadata.message}</span>
       </a>
     </div>
   );
