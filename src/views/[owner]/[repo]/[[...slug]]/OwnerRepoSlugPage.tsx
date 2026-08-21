@@ -31,11 +31,13 @@ export const OwnerRepoSlugPage = async ({ owner, repo, slug }: OwnerRepoSlugPage
   const readmeMarkdown = readme ? parseMarkdown(readme.content) : null;
   const skillMarkdown = skill ? parseMarkdown(skill.content) : null;
 
-  // 파일 경로는 마크다운 조회 결과로 확정되므로, 두 조회를 함께 시작해 왕복이 순차로 누적되지 않도록 합니다.
-  const [readmeMetadata, skillMetadata] = await Promise.all([
-    readme ? getRepositoryFileMetadata({ filePath: readme.filePath, owner, repo }) : null,
-    skill ? getRepositoryFileMetadata({ filePath: skill.path, owner, repo }) : null,
-  ]);
+  // 메타데이터는 본문 노출을 막지 않도록 조회를 기다리지 않고 프로미스를 탭에 담아 넘깁니다.
+  const readmeMetadataPromise = readme
+    ? getRepositoryFileMetadata({ filePath: readme.filePath, owner, repo })
+    : null;
+  const skillMetadataPromise = skill
+    ? getRepositoryFileMetadata({ filePath: skill.path, owner, repo })
+    : null;
 
   const folderName = path ? path.split('/').at(-1)! : repo;
   const breadcrumbs = getBreadcrumbs({ owner, repo, slug });
@@ -48,7 +50,7 @@ export const OwnerRepoSlugPage = async ({ owner, repo, slug }: OwnerRepoSlugPage
       content: readmeMarkdown.content,
       filePath: readme.filePath,
       label: 'README',
-      metadata: readmeMetadata,
+      metadataPromise: readmeMetadataPromise,
     });
   }
 
@@ -57,7 +59,7 @@ export const OwnerRepoSlugPage = async ({ owner, repo, slug }: OwnerRepoSlugPage
       content: skillMarkdown.content,
       filePath: skill.path,
       label: 'SKILL',
-      metadata: skillMetadata,
+      metadataPromise: skillMetadataPromise,
     });
   }
 
