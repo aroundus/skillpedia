@@ -1,16 +1,11 @@
 import { getRepositoryReadmeMarkdown, getRepositorySkillMarkdown } from '@/features/repository-markdown/api';
 import { getRepositoryFileMetadata } from '@/features/repository-metadata/api';
-import { getRepositoryTreeNodes } from '@/features/repository-tree/api';
 import { normalizeTitle } from '@/shared/lib';
-import { Layout } from '@/widgets/layout/ui';
 
 import { getBreadcrumbs, parseMarkdown } from './_lib';
 import { Article } from './_ui/Article';
 import type { ArticleTab } from './_ui/Article';
 import { Empty } from './_ui/Empty';
-import { Sidebar } from './_ui/Sidebar';
-
-import styles from './OwnerRepoSlugPage.module.scss';
 
 interface OwnerRepoSlugPageProps {
   owner: string;
@@ -26,14 +21,11 @@ export const OwnerRepoSlugPage = async ({ owner, repo, slug }: OwnerRepoSlugPage
 
   const path = slug.join('/');
 
-  // 트리를 먼저 기다리면 왕복이 순차로 누적되므로 마크다운 조회와 함께 시작합니다.
-  const [treeNodesResult, readmeMarkdownResult, skillMarkdownResult] = await Promise.allSettled([
-    getRepositoryTreeNodes({ owner, repo }),
+  const [readmeMarkdownResult, skillMarkdownResult] = await Promise.allSettled([
     getRepositoryReadmeMarkdown({ owner, path, repo }),
     getRepositorySkillMarkdown({ owner, path, repo }),
   ]);
 
-  const navItems = treeNodesResult.status === 'fulfilled' ? treeNodesResult.value : [];
   const readme = readmeMarkdownResult.status === 'fulfilled' ? readmeMarkdownResult.value : null;
   const skill = skillMarkdownResult.status === 'fulfilled' ? skillMarkdownResult.value : null;
   const readmeMarkdown = readme ? parseMarkdown(readme.content) : null;
@@ -77,26 +69,16 @@ export const OwnerRepoSlugPage = async ({ owner, repo, slug }: OwnerRepoSlugPage
   const description =
     readmeMarkdown?.frontmatter.description ?? skillMarkdown?.frontmatter.description;
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <Sidebar owner={owner} repo={repo} treeNodes={navItems} />
-
-        {tabs.length > 0 ? (
-          <Article
-            breadcrumbs={breadcrumbs}
-            description={description}
-            owner={owner}
-            repo={repo}
-            tabs={tabs}
-            title={title}
-          />
-        ) : (
-          <Empty owner={owner} repo={repo} />
-        )}
-      </div>
-
-      <Layout.Footer />
-    </div>
+  return tabs.length > 0 ? (
+    <Article
+      breadcrumbs={breadcrumbs}
+      description={description}
+      owner={owner}
+      repo={repo}
+      tabs={tabs}
+      title={title}
+    />
+  ) : (
+    <Empty owner={owner} repo={repo} />
   );
 };
