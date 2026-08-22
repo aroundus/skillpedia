@@ -3,9 +3,8 @@ import { getRepositoryFileMetadata } from '@/features/repository-metadata/api';
 import { normalizeTitle } from '@/shared/lib';
 
 import { getBreadcrumbs, parseMarkdown } from './_lib';
-import { Article } from './_ui/Article';
-import type { ArticleTab } from './_ui/Article';
-import { Empty } from './_ui/Empty';
+import { Article, Empty, ScrollRestoration } from './_ui';
+import type { ArticleTab } from './_ui';
 
 interface OwnerRepoSlugPageProps {
   owner: string;
@@ -71,16 +70,22 @@ export const OwnerRepoSlugPage = async ({ owner, repo, slug }: OwnerRepoSlugPage
   const description =
     readmeMarkdown?.frontmatter.description ?? skillMarkdown?.frontmatter.description;
 
-  return tabs.length > 0 ? (
-    <Article
-      breadcrumbs={breadcrumbs}
-      description={description}
-      owner={owner}
-      repo={repo}
-      tabs={tabs}
-      title={title}
-    />
-  ) : (
-    <Empty owner={owner} repo={repo} />
+  return (
+    <>
+      <ScrollRestoration />
+
+      {tabs.length > 0 ? (
+        <Article
+          breadcrumbs={breadcrumbs}
+          description={description}
+          owner={owner}
+          repo={repo}
+          tabs={tabs}
+          title={title}
+        />
+      ) : (
+        <Empty owner={owner} repo={repo} />
+      )}
+    </>
   );
 };
