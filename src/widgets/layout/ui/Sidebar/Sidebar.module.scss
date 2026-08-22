@@ -11,8 +11,8 @@
     @include hide-scrollbar('y');
 
     position: sticky;
-    top: 65px;
-    max-height: calc(100vh - 65px);
+    top: $header-height;
+    max-height: calc(100vh - $header-height);
 
     .title {
       margin: 0 0 var(--base-size-12);

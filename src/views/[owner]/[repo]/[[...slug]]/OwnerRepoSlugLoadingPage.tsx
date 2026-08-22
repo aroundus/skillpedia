@@ -8,9 +8,13 @@ export const OwnerRepoSlugLoadingPage = () => {
   const t = useTranslations('OwnerRepoSlugLoadingPage');
 
   return (
-    <div aria-busy="true" aria-label={t('ariaLabel')} className={styles.container} role="status">
+    <div
+      aria-busy="true"
+      aria-label={t('ariaLabel')}
+      className={styles.container}
+      role="status"
+    >
       <ScrollRestoration />
-
       <ProgressPanel />
     </div>
   );
