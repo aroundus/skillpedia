@@ -10,4 +10,4 @@ export const Layout = Object.assign(InternalLayout, {
 });
 
 export { Sidebar } from './Sidebar';
-export { SidebarSkeleton } from './SidebarSkeleton';
+export { SidebarSkeleton } from './Sidebar';
