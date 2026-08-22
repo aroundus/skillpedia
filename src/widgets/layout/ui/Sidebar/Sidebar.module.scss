@@ -4,11 +4,11 @@
 .container {
   flex-shrink: 0;
   width: $sidebar-width;
-  padding-inline: var(--base-size-8) var(--base-size-24);
+  padding-inline-start: var(--base-size-8);
   border-right: 1px solid var(--brand-color-border-default);
 
   .inner {
-    @include hide-scrollbar('y');
+    @include scrollbar('y');
 
     position: sticky;
     top: $header-height;
