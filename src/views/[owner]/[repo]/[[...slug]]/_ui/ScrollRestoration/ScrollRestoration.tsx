@@ -11,6 +11,20 @@ let shouldReset = false;
 // 뒤로/앞으로 이동의 경우 브라우저 복원을 덮어쓰지 않도록 초기화하지 않습니다.
 let isHistoryNavigation = false;
 
+const findHashTarget = (hash: string): HTMLElement | null => {
+  const target = document.getElementById(hash);
+
+  if (target) {
+    return target;
+  }
+
+  try {
+    return document.getElementById(decodeURIComponent(hash));
+  } catch {
+    return null;
+  }
+};
+
 const handlePopState = () => {
   isHistoryNavigation = true;
 };
@@ -52,7 +66,7 @@ export const ScrollRestoration = () => {
     const hash = window.location.hash.slice(1);
 
     if (hash) {
-      const target = document.getElementById(decodeURIComponent(hash));
+      const target = findHashTarget(hash);
 
       if (target) {
         target.scrollIntoView({ behavior: 'instant' });
