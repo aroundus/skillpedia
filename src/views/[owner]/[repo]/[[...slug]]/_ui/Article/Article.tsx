@@ -155,7 +155,10 @@ export const Article = ({ breadcrumbs, owner, repo, tabs, title, description }: 
               owner={owner}
               repo={repo}
             />
-            <Toc headings={tocHeadings} />
+            <Toc
+              headings={tocHeadings}
+              variant="column"
+            />
           </Stack>
         </article>
       </Stack>
