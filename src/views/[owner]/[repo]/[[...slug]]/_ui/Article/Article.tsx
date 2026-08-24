@@ -6,12 +6,12 @@ import { UnderlineNav } from '@primer/react';
 import { Breadcrumbs, Heading, Stack, Text } from '@primer/react-brand';
 import { useTranslations } from 'next-intl';
 
+import { Toc } from '@/features/repository-markdown/ui';
 import type { RepositoryFileMetadata } from '@/features/repository-metadata/api';
 
 import type { ArticleContent, Breadcrumb } from '../../_lib';
 import { ArticleMetadata } from '../ArticleMetadata';
 import { Prose } from '../Prose';
-import { Toc } from '../Toc';
 
 import styles from './Article.module.scss';
 

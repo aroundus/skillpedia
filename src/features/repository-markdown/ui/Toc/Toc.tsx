@@ -5,9 +5,13 @@ import { useEffect, useRef, useState } from 'react';
 import { ActionList } from '@primer/react';
 import { Text } from '@primer/react-brand';
 
-import type { TocHeading } from '../../_lib';
-
 import styles from './Toc.module.scss';
+
+export interface TocHeading {
+  depth: number;
+  id: string;
+  value: string;
+}
 
 interface TocProps {
   headings: TocHeading[];
