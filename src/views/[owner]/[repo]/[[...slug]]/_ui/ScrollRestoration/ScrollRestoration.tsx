@@ -49,6 +49,18 @@ export const ScrollRestoration = () => {
       isHistoryNavigation = false;
     }
 
+    const hash = window.location.hash.slice(1);
+
+    if (hash) {
+      const target = document.getElementById(decodeURIComponent(hash));
+
+      if (target) {
+        target.scrollIntoView({ behavior: 'instant' });
+
+        return;
+      }
+    }
+
     if (!shouldReset) {
       return;
     }
