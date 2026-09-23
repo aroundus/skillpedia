@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
 
 import { headers } from 'next/headers';
+import { notFound } from 'next/navigation';
 import { userAgent } from 'next/server';
 
+import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { routing } from '@/shared/i18n/routing';
 import { HomePage } from '@/views/(home)/HomePage';
 import { getRankedRepositoryMetadataList } from '@/views/(home)/_lib';
 
@@ -50,6 +53,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
+
+  // 레이아웃과 페이지를 함께 렌더링하므로 레이아웃의 notFound()만으로는 저장소 메타데이터 조회를 막지 못합니다.
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
   setRequestLocale(locale);
 
   const repositoryMetadataList = await getRankedRepositoryMetadataList();
