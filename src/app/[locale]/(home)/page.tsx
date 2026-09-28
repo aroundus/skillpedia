@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 
-import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { userAgent } from 'next/server';
 
 import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -15,9 +13,8 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-// headers()로 기기를 판별하기 때문에 매 요청 시 렌더링합니다.
-// 저장소 메타데이터 재사용은 getRepositoryMetadata의 캐시가 담당합니다.
-export const dynamic = 'force-dynamic';
+// 렌더링 결과를 1시간마다 재검증해 저장소 순위 계산까지 재사용합니다.
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
@@ -63,14 +60,5 @@ export default async function Page({ params }: PageProps) {
 
   const repositoryMetadataList = await getRankedRepositoryMetadataList();
 
-  const headersList = await headers();
-  const { device } = userAgent({ headers: headersList });
-  const isMobile = device.type === 'mobile';
-
-  return (
-    <HomePage
-      isMobile={isMobile}
-      repositoryMetadataList={repositoryMetadataList}
-    />
-  );
+  return <HomePage repositoryMetadataList={repositoryMetadataList} />;
 }
