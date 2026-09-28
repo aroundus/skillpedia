@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SparkleFillIcon } from '@primer/octicons-react';
 import { ProgressBar } from '@primer/react';
@@ -18,7 +18,7 @@ const PROGRESS_CAP = 0.99;
 const EASE_FACTOR = 0.02;
 const TICK_INTERVAL = 100;
 
-// loading.tsx 폴백에서 페이지 폴백으로 교체되며 다시 마운트되는 경우 진행값이 되돌아가지 않도록 경로별로 기억합니다.
+// Next.js가 loading.tsx 폴백을 페이지 폴백으로 교체하며 ProgressPanel을 다시 마운트하는 경우 진행값이 되돌아가지 않도록 경로별로 기억합니다.
 const lastProgressMap = new Map<string, number>();
 
 export const ProgressPanel = () => {
@@ -32,38 +32,44 @@ export const ProgressPanel = () => {
   const floor = currentStepIndex / PROGRESS_STEP_NAMES.length;
   const ceiling = Math.min((currentStepIndex + 1) / PROGRESS_STEP_NAMES.length, PROGRESS_CAP);
 
-  const [progress, setProgress] = useState(() => {
-    return lastProgressMap.get(pathname) ?? 0;
+  const percentRef = useRef<HTMLSpanElement>(null);
+  const progressBarItemRef = useRef<HTMLSpanElement>(null);
+  const [initialPercent] = useState(() => {
+    return Math.round((lastProgressMap.get(pathname) ?? 0) * 100);
   });
 
-  const displayedProgress = Math.max(progress, floor);
-  const percent = Math.round(displayedProgress * 100);
-
+  // 진행값을 React 상태로 갱신하면 타이머 업데이트가 본문의 Suspense 재시도 렌더링을 계속 중단시키므로 DOM에 직접 반영합니다.
   useEffect(() => {
-    lastProgressMap.set(pathname, displayedProgress);
-  }, [displayedProgress, pathname]);
+    let progress = Math.max(lastProgressMap.get(pathname) ?? 0, floor);
 
-  useEffect(() => {
+    const renderProgress = () => {
+      const percent = Math.round(progress * 100);
+
+      lastProgressMap.set(pathname, progress);
+      percentRef.current?.replaceChildren(String(percent));
+      progressBarItemRef.current?.style.setProperty('--progress-width', `${percent}%`);
+    };
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
-      setProgress(ceiling);
+      progress = ceiling;
+      renderProgress();
 
       return;
     }
 
-    const timer = setInterval(() => {
-      setProgress((previous) => {
-        const current = Math.max(previous, floor);
+    renderProgress();
 
-        return current + (ceiling - current) * EASE_FACTOR;
-      });
+    const timer = setInterval(() => {
+      progress += (ceiling - progress) * EASE_FACTOR;
+      renderProgress();
     }, TICK_INTERVAL);
 
     return () => {
       return clearInterval(timer);
     };
-  }, [ceiling, floor]);
+  }, [ceiling, floor, pathname]);
 
   return (
     <main className={styles.container}>
@@ -80,18 +86,31 @@ export const ProgressPanel = () => {
       <div className={styles.middle}>
         <Statistic>
           <Statistic.Heading className={styles.percent}>
-            {percent}
+            <span ref={percentRef}>{initialPercent}</span>
             <span className={styles.percentUnit}>%</span>
           </Statistic.Heading>
         </Statistic>
       </div>
 
       <div className={styles.bottom}>
-        <Text as="p" className={styles.step} size="200" variant="muted">
+        <Text
+          as="p"
+          className={styles.step}
+          size="200"
+          variant="muted"
+        >
           {t(`steps.${currentStepName}`)}
         </Text>
 
-        <ProgressBar aria-hidden className={styles.progressBar} progress={percent} />
+        <ProgressBar
+          aria-hidden
+          className={styles.progressBar}
+        >
+          <ProgressBar.Item
+            progress={initialPercent}
+            ref={progressBarItemRef}
+          />
+        </ProgressBar>
       </div>
     </main>
   );
