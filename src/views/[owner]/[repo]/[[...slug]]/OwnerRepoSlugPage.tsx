@@ -3,7 +3,8 @@ import { Suspense } from 'react';
 import { getRepositoryReadmeMarkdown, getRepositorySkillMarkdown } from '@/features/repository-markdown/api';
 
 import { OwnerRepoSlugLoadingPage } from './OwnerRepoSlugLoadingPage';
-import { getProgressStepProps, OwnerRepoSlugContent, ProgressStep } from './_ui';
+import { getProgressStepProps, ProgressStep } from './_ui';
+import { OwnerRepoSlugContent } from './_ui/OwnerRepoSlugContent';
 
 interface OwnerRepoSlugPageProps {
   owner: string;
