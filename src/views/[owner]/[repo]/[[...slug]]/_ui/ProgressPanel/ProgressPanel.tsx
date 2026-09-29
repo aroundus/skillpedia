@@ -15,8 +15,9 @@ import { useCurrentProgressStepName } from './useCurrentProgressStepName';
 import styles from './ProgressPanel.module.scss';
 
 const PROGRESS_CAP = 0.99;
-const EASE_FACTOR = 0.02;
-const TICK_INTERVAL = 100;
+// 상한까지 남은 차이의 약 63%를 채우는 시간입니다. 진행값이 하한보다 낮은 경우 FAST_DURATION_MILLISECONDS, 하한 이상인 경우 SLOW_DURATION_MILLISECONDS를 사용합니다.
+const FAST_DURATION_MILLISECONDS = 300;
+const SLOW_DURATION_MILLISECONDS = 5000;
 
 // Next.js가 loading.tsx 폴백을 페이지 폴백으로 교체하며 ProgressPanel을 다시 마운트하는 경우 진행값이 되돌아가지 않도록 경로별로 기억합니다.
 const lastProgressMap = new Map<string, number>();
@@ -40,14 +41,24 @@ export const ProgressPanel = () => {
 
   // 진행값을 React 상태로 갱신하면 타이머 업데이트가 본문의 Suspense 재시도 렌더링을 계속 중단시키므로 DOM에 직접 반영합니다.
   useEffect(() => {
-    let progress = Math.max(lastProgressMap.get(pathname) ?? 0, floor);
+    let progress = lastProgressMap.get(pathname) ?? 0;
+    let previousTimestamp: number | null = null;
+    let frame = 0;
 
     const renderProgress = () => {
-      const percent = Math.round(progress * 100);
-
       lastProgressMap.set(pathname, progress);
-      percentRef.current?.replaceChildren(String(percent));
-      progressBarItemRef.current?.style.setProperty('--progress-width', `${percent}%`);
+      percentRef.current?.replaceChildren(String(Math.round(progress * 100)));
+      progressBarItemRef.current?.style.setProperty('--progress-width', `${progress * 100}%`);
+    };
+
+    const tick = (timestamp: number) => {
+      const elapsedDurationMilliseconds = previousTimestamp === null ? 0 : timestamp - previousTimestamp;
+      const easeDurationMilliseconds = progress < floor ? FAST_DURATION_MILLISECONDS : SLOW_DURATION_MILLISECONDS;
+
+      previousTimestamp = timestamp;
+      progress += (ceiling - progress) * (1 - Math.exp(-elapsedDurationMilliseconds / easeDurationMilliseconds));
+      renderProgress();
+      frame = requestAnimationFrame(tick);
     };
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -55,19 +66,12 @@ export const ProgressPanel = () => {
     if (prefersReducedMotion) {
       progress = ceiling;
       renderProgress();
-
-      return;
+    } else {
+      frame = requestAnimationFrame(tick);
     }
 
-    renderProgress();
-
-    const timer = setInterval(() => {
-      progress += (ceiling - progress) * EASE_FACTOR;
-      renderProgress();
-    }, TICK_INTERVAL);
-
     return () => {
-      return clearInterval(timer);
+      return cancelAnimationFrame(frame);
     };
   }, [ceiling, floor, pathname]);
 
