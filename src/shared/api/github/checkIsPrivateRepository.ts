@@ -1,7 +1,7 @@
 import { unstable_cache } from 'next/cache';
 
 import { getRepositoryCacheTag } from './cache';
-import { getRepositoryOctokit } from './github-app';
+import { getRepositoryOctokit } from './getRepositoryOctokit';
 
 // 공개 여부는 거의 바뀌지 않고 늦게 반영돼도 내용이 노출되지 않으므로 하루 동안 재사용합니다.
 const REVALIDATE_SECONDS = 24 * 60 * 60;
